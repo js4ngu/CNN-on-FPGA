@@ -1,0 +1,4 @@
+eclipse.preferences.version=1
+newSoftwareExampleWizardPage.defaultLocation=C\:\\JS\\CNN-on-FPGA\\Lab1-1\\software\\PS
+newSoftwareExampleWizardPage.sopcinfoFile=C\:\\JS\\CNN-on-FPGA\\Lab1-1\\proj_qsys.sopcinfo
+newSoftwareExampleWizardPage2.newBspLocation=C\:\\JS\\CNN-on-FPGA\\Lab1-1\\software\\PS_bsp

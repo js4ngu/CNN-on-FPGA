@@ -1,0 +1,21 @@
+11:34:57 **** Incremental Build of configuration Nios II for project proj_ps ****
+make all 
+Info: Building ../proj_ps_bsp/
+C:/altera_lite/16.0/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../proj_ps_bsp/
+Makefile not up to date.
+../../proj_qsys.sopcinfo has been modified since the BSP was generated.
+
+Generate the BSP to update the Makefile, and then build again.
+
+To generate from Eclipse:
+ 1. Right-click the BSP project.
+ 2. In the Nios II Menu, click Generate BSP.
+
+To generate from the command line:
+ nios2-bsp-generate-files --settings=<settings file> --bsp-dir=<target bsp files directory>
+
+make[1]: *** [public.mk] Error 1
+make: *** [../proj_ps_bsp/-recurs-make-lib] Error 2
+
+11:34:58 Build Finished (took 968ms)
+
