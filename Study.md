@@ -1,4 +1,5 @@
 # 궁금증
+## Lab1-1
 1. Aavlon Bus가 AXI Interface같은 것인가?
 2. Altera 환경에서는 AXI Interface는 못 쓰는것인지?
 3. NIOS2가 Xillinx의 microblaze 같은 것인가?
