@@ -7,8 +7,8 @@ Disassembly of section .text:
 00000000 <__cs3_interrupt_vector>:
    0:	18 f0 9f e5 18 f0 9f e5 18 f0 9f e5 18 f0 9f e5     ................
   10:	18 f0 9f e5 18 f0 9f e5 18 f0 9f e5 18 f0 9f e5     ................
-  20:	40 00 00 00 80 0a 00 00 84 0a 00 00 88 0a 00 00     @...............
-  30:	8c 0a 00 00 7c 0a 00 00 90 0a 00 00 94 0a 00 00     ....|...........
+  20:	40 00 00 00 0c 0c 00 00 10 0c 00 00 14 0c 00 00     @...............
+  30:	18 0c 00 00 08 0c 00 00 1c 0c 00 00 20 0c 00 00     ............ ...
 
 00000040 <__cs3_reset>:
   40:	ea000026 	b	e0 <__cs3_start_asm_sim>
@@ -50,9 +50,9 @@ Disassembly of section .text:
   c8:	e3760001 	cmn	r6, #1
   cc:	e2855014 	add	r5, r5, #20
   d0:	1affffe3 	bne	64 <__cs3_start_c+0x20>
-  d4:	eb00024f 	bl	a18 <__cs3_premain>
+  d4:	eb0002b2 	bl	ba4 <__cs3_premain>
   d8:	00000001 	.word	0x00000001
-  dc:	00000b7c 	.word	0x00000b7c
+  dc:	00000d08 	.word	0x00000d08
 
 000000e0 <__cs3_start_asm_sim>:
   e0:	e28f103c 	add	r1, pc, #60	; 0x3c
@@ -71,10 +71,10 @@ Disassembly of section .text:
  114:	15810000 	strne	r0, [r1]
  118:	eaffffc9 	b	44 <__cs3_start_c>
  11c:	3ffffff8 	.word	0x3ffffff8
- 120:	00000fd0 	.word	0x00000fd0
+ 120:	00001158 	.word	0x00001158
 
 00000124 <__cs3_heap_start_ptr>:
- 124:	00001008 	.word	0x00001008
+ 124:	00026990 	.word	0x00026990
 
 00000128 <_start>:
  128:	e51fd000 	ldr	sp, [pc, #-0]	; 130 <_start+0x8>
@@ -96,8 +96,8 @@ Disassembly of section .text:
  160:	e1a0e00f 	mov	lr, pc
  164:	e12fff13 	bx	r3
  168:	eafffff7 	b	14c <deregister_tm_clones+0x18>
- 16c:	00000fd8 	.word	0x00000fd8
- 170:	00000fdb 	.word	0x00000fdb
+ 16c:	00001160 	.word	0x00001160
+ 170:	00001163 	.word	0x00001163
  174:	00000000 	.word	0x00000000
 
 00000178 <register_tm_clones>:
@@ -117,8 +117,8 @@ Disassembly of section .text:
  1ac:	e1a0e00f 	mov	lr, pc
  1b0:	e12fff12 	bx	r2
  1b4:	eafffff7 	b	198 <register_tm_clones+0x20>
- 1b8:	00000fd8 	.word	0x00000fd8
- 1bc:	00000fd8 	.word	0x00000fd8
+ 1b8:	00001160 	.word	0x00001160
+ 1bc:	00001160 	.word	0x00001160
  1c0:	00000000 	.word	0x00000000
 
 000001c4 <__do_global_dtors_aux>:
@@ -136,9 +136,9 @@ Disassembly of section .text:
  1f0:	e5c43000 	strb	r3, [r4]
  1f4:	e8bd4010 	pop	{r4, lr}
  1f8:	e12fff1e 	bx	lr
- 1fc:	00000fd8 	.word	0x00000fd8
+ 1fc:	00001160 	.word	0x00001160
  200:	00000000 	.word	0x00000000
- 204:	00000b20 	.word	0x00000b20
+ 204:	00000cac 	.word	0x00000cac
 
 00000208 <frame_dummy>:
  208:	e92d4008 	push	{r3, lr}
@@ -158,912 +158,1090 @@ Disassembly of section .text:
  240:	e8bd4008 	pop	{r3, lr}
  244:	eaffffcb 	b	178 <register_tm_clones>
  248:	00000000 	.word	0x00000000
- 24c:	00000b20 	.word	0x00000b20
- 250:	00000fdc 	.word	0x00000fdc
- 254:	00000b80 	.word	0x00000b80
+ 24c:	00000cac 	.word	0x00000cac
+ 250:	00001164 	.word	0x00001164
+ 254:	00000d08 	.word	0x00000d08
  258:	00000000 	.word	0x00000000
 
 0000025c <captureVideo>:
 		}
-		DrawRectangle_filled(off_x, off_y, 50, 50, GREEN|RED);
+
 	}
 }
 
 void captureVideo(){
  25c:	e92d0030 	push	{r4, r5}
-	for (y = 0; y < 240; y++) {
- 260:	e3003ff4 	movw	r3, #4084	; 0xff4
+	*(Video_In_DMA_ptr + 3) = 0x0;
+ 260:	e3003d10 	movw	r3, #3344	; 0xd10
  264:	e3403000 	movt	r3, #0
- 268:	e3a02000 	mov	r2, #0
- 26c:	e5832000 	str	r2, [r3]
+ 268:	e5933000 	ldr	r3, [r3]
+ 26c:	e3a02000 	mov	r2, #0
+ 270:	e583200c 	str	r2, [r3, #12]
+	for (y = 0; y < 240; y++) {
+ 274:	e301317c 	movw	r3, #4476	; 0x117c
+ 278:	e3403000 	movt	r3, #0
+ 27c:	e5832000 	str	r2, [r3]
 		for (x = 0; x < 320; x++) {
- 270:	e1a02003 	mov	r2, r3
- 274:	e3a05000 	mov	r5, #0
+ 280:	e1a02003 	mov	r2, r3
+ 284:	e3a05000 	mov	r5, #0
 			short temp2 = *(Video_Mem_ptr + (y << 9) + x);
- 278:	e300cb88 	movw	r12, #2952	; 0xb88
- 27c:	e340c000 	movt	r12, #0
-	}
+ 288:	e300cd10 	movw	r12, #3344	; 0xd10
+ 28c:	e340c000 	movt	r12, #0
 }
 
 void captureVideo(){
+	*(Video_In_DMA_ptr + 3) = 0x0;
 	for (y = 0; y < 240; y++) {
 		for (x = 0; x < 320; x++) {
- 280:	e300413f 	movw	r4, #319	; 0x13f
- 284:	e5825004 	str	r5, [r2, #4]
- 288:	e1a03005 	mov	r3, r5
+ 290:	e300413f 	movw	r4, #319	; 0x13f
+ 294:	e5825004 	str	r5, [r2, #4]
+ 298:	e1a03005 	mov	r3, r5
 			short temp2 = *(Video_Mem_ptr + (y << 9) + x);
- 28c:	e5921000 	ldr	r1, [r2]
- 290:	e0833481 	add	r3, r3, r1, lsl #9
- 294:	e1a03083 	lsl	r3, r3, #1
- 298:	e59c1000 	ldr	r1, [r12]
- 29c:	e19100b3 	ldrh	r0, [r1, r3]
+ 29c:	e5921000 	ldr	r1, [r2]
+ 2a0:	e0833481 	add	r3, r3, r1, lsl #9
+ 2a4:	e1a03083 	lsl	r3, r3, #1
+ 2a8:	e59c1004 	ldr	r1, [r12, #4]
+ 2ac:	e19100b3 	ldrh	r0, [r1, r3]
 			*(Video_Mem_ptr + (y << 9) + x) = temp2; //capture the current image in the buffer and store it in the buffer
- 2a0:	e18100b3 	strh	r0, [r1, r3]
-	}
+ 2b0:	e18100b3 	strh	r0, [r1, r3]
 }
 
 void captureVideo(){
+	*(Video_In_DMA_ptr + 3) = 0x0;
 	for (y = 0; y < 240; y++) {
 		for (x = 0; x < 320; x++) {
- 2a4:	e5923004 	ldr	r3, [r2, #4]
- 2a8:	e2833001 	add	r3, r3, #1
- 2ac:	e5823004 	str	r3, [r2, #4]
- 2b0:	e1530004 	cmp	r3, r4
- 2b4:	dafffff4 	ble	28c <captureVideo+0x30>
-		DrawRectangle_filled(off_x, off_y, 50, 50, GREEN|RED);
+ 2b4:	e5923004 	ldr	r3, [r2, #4]
+ 2b8:	e2833001 	add	r3, r3, #1
+ 2bc:	e5823004 	str	r3, [r2, #4]
+ 2c0:	e1530004 	cmp	r3, r4
+ 2c4:	dafffff4 	ble	29c <captureVideo+0x40>
 	}
 }
 
 void captureVideo(){
+	*(Video_In_DMA_ptr + 3) = 0x0;
 	for (y = 0; y < 240; y++) {
- 2b8:	e5923000 	ldr	r3, [r2]
- 2bc:	e2833001 	add	r3, r3, #1
- 2c0:	e5823000 	str	r3, [r2]
- 2c4:	e35300ef 	cmp	r3, #239	; 0xef
- 2c8:	daffffed 	ble	284 <captureVideo+0x28>
+ 2c8:	e5923000 	ldr	r3, [r2]
+ 2cc:	e2833001 	add	r3, r3, #1
+ 2d0:	e5823000 	str	r3, [r2]
+ 2d4:	e35300ef 	cmp	r3, #239	; 0xef
+ 2d8:	daffffed 	ble	294 <captureVideo+0x38>
 		for (x = 0; x < 320; x++) {
 			short temp2 = *(Video_Mem_ptr + (y << 9) + x);
 			*(Video_Mem_ptr + (y << 9) + x) = temp2; //capture the current image in the buffer and store it in the buffer
 		}
 	}	
 }
- 2cc:	e8bd0030 	pop	{r4, r5}
- 2d0:	e12fff1e 	bx	lr
+ 2dc:	e8bd0030 	pop	{r4, r5}
+ 2e0:	e12fff1e 	bx	lr
 
-000002d4 <blackScreen>:
+000002e4 <fixelData>:
+
+void fixelData(){
+ 2e4:	e92d00f0 	push	{r4, r5, r6, r7}
+	*(Video_In_DMA_ptr + 3) = 0x0;
+ 2e8:	e3003d10 	movw	r3, #3344	; 0xd10
+ 2ec:	e3403000 	movt	r3, #0
+ 2f0:	e5933000 	ldr	r3, [r3]
+ 2f4:	e3a02000 	mov	r2, #0
+ 2f8:	e583200c 	str	r2, [r3, #12]
+	for (y = 0; y < 240; y++) {
+ 2fc:	e301317c 	movw	r3, #4476	; 0x117c
+ 300:	e3403000 	movt	r3, #0
+ 304:	e5832000 	str	r2, [r3]
+		for (x = 0; x < 320; x++) {
+ 308:	e1a02003 	mov	r2, r3
+ 30c:	e3a07000 	mov	r7, #0
+			fixeldata[x][y] = *(Video_Mem_ptr + (y << 9) + x);
+ 310:	e3005d10 	movw	r5, #3344	; 0xd10
+ 314:	e3405000 	movt	r5, #0
+}
+
+void fixelData(){
+	*(Video_In_DMA_ptr + 3) = 0x0;
+	for (y = 0; y < 240; y++) {
+		for (x = 0; x < 320; x++) {
+ 318:	e300613f 	movw	r6, #319	; 0x13f
+ 31c:	e5827004 	str	r7, [r2, #4]
+ 320:	e1a03007 	mov	r3, r7
+			fixeldata[x][y] = *(Video_Mem_ptr + (y << 9) + x);
+ 324:	e5924000 	ldr	r4, [r2]
+ 328:	e0831484 	add	r1, r3, r4, lsl #9
+ 32c:	e1a01081 	lsl	r1, r1, #1
+ 330:	e5950004 	ldr	r0, [r5, #4]
+ 334:	e190c0b1 	ldrh	r12, [r0, r1]
+ 338:	e0633203 	rsb	r3, r3, r3, lsl #4
+ 33c:	e0844203 	add	r4, r4, r3, lsl #4
+ 340:	e0824084 	add	r4, r2, r4, lsl #1
+ 344:	e1c4c0b8 	strh	r12, [r4, #8]
+			*(Video_Mem_ptr + (y << 9) + x) = fixeldata[x][y]; //capture the current image in the buffer and store it in the buffer
+ 348:	e180c0b1 	strh	r12, [r0, r1]
+}
+
+void fixelData(){
+	*(Video_In_DMA_ptr + 3) = 0x0;
+	for (y = 0; y < 240; y++) {
+		for (x = 0; x < 320; x++) {
+ 34c:	e5923004 	ldr	r3, [r2, #4]
+ 350:	e2833001 	add	r3, r3, #1
+ 354:	e5823004 	str	r3, [r2, #4]
+ 358:	e1530006 	cmp	r3, r6
+ 35c:	dafffff0 	ble	324 <fixelData+0x40>
+	}	
+}
+
+void fixelData(){
+	*(Video_In_DMA_ptr + 3) = 0x0;
+	for (y = 0; y < 240; y++) {
+ 360:	e5923000 	ldr	r3, [r2]
+ 364:	e2833001 	add	r3, r3, #1
+ 368:	e5823000 	str	r3, [r2]
+ 36c:	e35300ef 	cmp	r3, #239	; 0xef
+ 370:	daffffe9 	ble	31c <fixelData+0x38>
+		for (x = 0; x < 320; x++) {
+			fixeldata[x][y] = *(Video_Mem_ptr + (y << 9) + x);
+			*(Video_Mem_ptr + (y << 9) + x) = fixeldata[x][y]; //capture the current image in the buffer and store it in the buffer
+		}
+	}	
+}
+ 374:	e8bd00f0 	pop	{r4, r5, r6, r7}
+ 378:	e12fff1e 	bx	lr
+
+0000037c <blackScreen>:
 
 void blackScreen(){
- 2d4:	e92d0030 	push	{r4, r5}
+ 37c:	e92d0030 	push	{r4, r5}
 	*(Video_In_DMA_ptr + 3) = 0x0;
- 2d8:	e3003b88 	movw	r3, #2952	; 0xb88
- 2dc:	e3403000 	movt	r3, #0
- 2e0:	e5933004 	ldr	r3, [r3, #4]
- 2e4:	e3a02000 	mov	r2, #0
- 2e8:	e583200c 	str	r2, [r3, #12]
+ 380:	e3003d10 	movw	r3, #3344	; 0xd10
+ 384:	e3403000 	movt	r3, #0
+ 388:	e5933000 	ldr	r3, [r3]
+ 38c:	e3a02000 	mov	r2, #0
+ 390:	e583200c 	str	r2, [r3, #12]
 	for (y = 0; y < 240; y++) {
- 2ec:	e3003ff4 	movw	r3, #4084	; 0xff4
- 2f0:	e3403000 	movt	r3, #0
- 2f4:	e5832000 	str	r2, [r3]
+ 394:	e301317c 	movw	r3, #4476	; 0x117c
+ 398:	e3403000 	movt	r3, #0
+ 39c:	e5832000 	str	r2, [r3]
 		for (x = 0; x < 320; x++) {
- 2f8:	e1a02003 	mov	r2, r3
- 2fc:	e3a0c000 	mov	r12, #0
- 300:	e1a0500c 	mov	r5, r12
-			*(Video_Mem_ptr + (y << 9) + x) = BLACK; //make every pixel black
- 304:	e3000b88 	movw	r0, #2952	; 0xb88
- 308:	e3400000 	movt	r0, #0
+ 3a0:	e1a02003 	mov	r2, r3
+ 3a4:	e3a0c000 	mov	r12, #0
+ 3a8:	e1a0500c 	mov	r5, r12
+			*(Video_Mem_ptr + (y << 9) + x) = BLACK;
+ 3ac:	e3000d10 	movw	r0, #3344	; 0xd10
+ 3b0:	e3400000 	movt	r0, #0
 }
 
 void blackScreen(){
 	*(Video_In_DMA_ptr + 3) = 0x0;
 	for (y = 0; y < 240; y++) {
 		for (x = 0; x < 320; x++) {
- 30c:	e300413f 	movw	r4, #319	; 0x13f
- 310:	e5825004 	str	r5, [r2, #4]
- 314:	e1a03005 	mov	r3, r5
-			*(Video_Mem_ptr + (y << 9) + x) = BLACK; //make every pixel black
- 318:	e5921000 	ldr	r1, [r2]
- 31c:	e0833481 	add	r3, r3, r1, lsl #9
- 320:	e1a03083 	lsl	r3, r3, #1
- 324:	e5901000 	ldr	r1, [r0]
- 328:	e181c0b3 	strh	r12, [r1, r3]
+ 3b4:	e300413f 	movw	r4, #319	; 0x13f
+ 3b8:	e5825004 	str	r5, [r2, #4]
+ 3bc:	e1a03005 	mov	r3, r5
+			*(Video_Mem_ptr + (y << 9) + x) = BLACK;
+ 3c0:	e5921000 	ldr	r1, [r2]
+ 3c4:	e0833481 	add	r3, r3, r1, lsl #9
+ 3c8:	e1a03083 	lsl	r3, r3, #1
+ 3cc:	e5901004 	ldr	r1, [r0, #4]
+ 3d0:	e181c0b3 	strh	r12, [r1, r3]
 }
 
 void blackScreen(){
 	*(Video_In_DMA_ptr + 3) = 0x0;
 	for (y = 0; y < 240; y++) {
 		for (x = 0; x < 320; x++) {
- 32c:	e5923004 	ldr	r3, [r2, #4]
- 330:	e2833001 	add	r3, r3, #1
- 334:	e5823004 	str	r3, [r2, #4]
- 338:	e1530004 	cmp	r3, r4
- 33c:	dafffff5 	ble	318 <blackScreen+0x44>
+ 3d4:	e5923004 	ldr	r3, [r2, #4]
+ 3d8:	e2833001 	add	r3, r3, #1
+ 3dc:	e5823004 	str	r3, [r2, #4]
+ 3e0:	e1530004 	cmp	r3, r4
+ 3e4:	dafffff5 	ble	3c0 <blackScreen+0x44>
 	}	
 }
 
 void blackScreen(){
 	*(Video_In_DMA_ptr + 3) = 0x0;
 	for (y = 0; y < 240; y++) {
- 340:	e5923000 	ldr	r3, [r2]
- 344:	e2833001 	add	r3, r3, #1
- 348:	e5823000 	str	r3, [r2]
- 34c:	e35300ef 	cmp	r3, #239	; 0xef
- 350:	daffffee 	ble	310 <blackScreen+0x3c>
+ 3e8:	e5923000 	ldr	r3, [r2]
+ 3ec:	e2833001 	add	r3, r3, #1
+ 3f0:	e5823000 	str	r3, [r2]
+ 3f4:	e35300ef 	cmp	r3, #239	; 0xef
+ 3f8:	daffffee 	ble	3b8 <blackScreen+0x3c>
 		for (x = 0; x < 320; x++) {
-			*(Video_Mem_ptr + (y << 9) + x) = BLACK; //make every pixel black
+			*(Video_Mem_ptr + (y << 9) + x) = BLACK;
 		}
 	}	
 }
- 354:	e8bd0030 	pop	{r4, r5}
- 358:	e12fff1e 	bx	lr
+ 3fc:	e8bd0030 	pop	{r4, r5}
+ 400:	e12fff1e 	bx	lr
 
-0000035c <whiteScreen>:
-
-void whiteScreen(){
- 35c:	e92d0030 	push	{r4, r5}
-	*(Video_In_DMA_ptr + 3) = 0x0;
- 360:	e3003b88 	movw	r3, #2952	; 0xb88
- 364:	e3403000 	movt	r3, #0
- 368:	e5933004 	ldr	r3, [r3, #4]
- 36c:	e3a02000 	mov	r2, #0
- 370:	e583200c 	str	r2, [r3, #12]
-	for (y = 0; y < 240; y++) {
- 374:	e3003ff4 	movw	r3, #4084	; 0xff4
- 378:	e3403000 	movt	r3, #0
- 37c:	e5832000 	str	r2, [r3]
-		for (x = 0; x < 320; x++) {
- 380:	e1a02003 	mov	r2, r3
- 384:	e3a05000 	mov	r5, #0
-			*(Video_Mem_ptr + (y << 9) + x) = WHITE; //make every pixel black
- 388:	e3000b88 	movw	r0, #2952	; 0xb88
- 38c:	e3400000 	movt	r0, #0
- 390:	e3e04000 	mvn	r4, #0
-}
+00000404 <whiteScreen>:
 
 void whiteScreen(){
+ 404:	e92d0030 	push	{r4, r5}
 	*(Video_In_DMA_ptr + 3) = 0x0;
+ 408:	e3003d10 	movw	r3, #3344	; 0xd10
+ 40c:	e3403000 	movt	r3, #0
+ 410:	e5933000 	ldr	r3, [r3]
+ 414:	e3a02000 	mov	r2, #0
+ 418:	e583200c 	str	r2, [r3, #12]
 	for (y = 0; y < 240; y++) {
+ 41c:	e301317c 	movw	r3, #4476	; 0x117c
+ 420:	e3403000 	movt	r3, #0
+ 424:	e5832000 	str	r2, [r3]
 		for (x = 0; x < 320; x++) {
- 394:	e300c13f 	movw	r12, #319	; 0x13f
- 398:	e5825004 	str	r5, [r2, #4]
- 39c:	e1a03005 	mov	r3, r5
-			*(Video_Mem_ptr + (y << 9) + x) = WHITE; //make every pixel black
- 3a0:	e5921000 	ldr	r1, [r2]
- 3a4:	e0833481 	add	r3, r3, r1, lsl #9
- 3a8:	e1a03083 	lsl	r3, r3, #1
- 3ac:	e5901000 	ldr	r1, [r0]
- 3b0:	e18140b3 	strh	r4, [r1, r3]
+ 428:	e1a02003 	mov	r2, r3
+ 42c:	e3a05000 	mov	r5, #0
+			*(Video_Mem_ptr + (y << 9) + x) = WHITE;
+ 430:	e3000d10 	movw	r0, #3344	; 0xd10
+ 434:	e3400000 	movt	r0, #0
+ 438:	e3e04000 	mvn	r4, #0
 }
 
 void whiteScreen(){
 	*(Video_In_DMA_ptr + 3) = 0x0;
 	for (y = 0; y < 240; y++) {
 		for (x = 0; x < 320; x++) {
- 3b4:	e5923004 	ldr	r3, [r2, #4]
- 3b8:	e2833001 	add	r3, r3, #1
- 3bc:	e5823004 	str	r3, [r2, #4]
- 3c0:	e153000c 	cmp	r3, r12
- 3c4:	dafffff5 	ble	3a0 <whiteScreen+0x44>
+ 43c:	e300c13f 	movw	r12, #319	; 0x13f
+ 440:	e5825004 	str	r5, [r2, #4]
+ 444:	e1a03005 	mov	r3, r5
+			*(Video_Mem_ptr + (y << 9) + x) = WHITE;
+ 448:	e5921000 	ldr	r1, [r2]
+ 44c:	e0833481 	add	r3, r3, r1, lsl #9
+ 450:	e1a03083 	lsl	r3, r3, #1
+ 454:	e5901004 	ldr	r1, [r0, #4]
+ 458:	e18140b3 	strh	r4, [r1, r3]
+}
+
+void whiteScreen(){
+	*(Video_In_DMA_ptr + 3) = 0x0;
+	for (y = 0; y < 240; y++) {
+		for (x = 0; x < 320; x++) {
+ 45c:	e5923004 	ldr	r3, [r2, #4]
+ 460:	e2833001 	add	r3, r3, #1
+ 464:	e5823004 	str	r3, [r2, #4]
+ 468:	e153000c 	cmp	r3, r12
+ 46c:	dafffff5 	ble	448 <whiteScreen+0x44>
 	}	
 }
 
 void whiteScreen(){
 	*(Video_In_DMA_ptr + 3) = 0x0;
 	for (y = 0; y < 240; y++) {
- 3c8:	e5923000 	ldr	r3, [r2]
- 3cc:	e2833001 	add	r3, r3, #1
- 3d0:	e5823000 	str	r3, [r2]
- 3d4:	e35300ef 	cmp	r3, #239	; 0xef
- 3d8:	daffffee 	ble	398 <whiteScreen+0x3c>
+ 470:	e5923000 	ldr	r3, [r2]
+ 474:	e2833001 	add	r3, r3, #1
+ 478:	e5823000 	str	r3, [r2]
+ 47c:	e35300ef 	cmp	r3, #239	; 0xef
+ 480:	daffffee 	ble	440 <whiteScreen+0x3c>
 		for (x = 0; x < 320; x++) {
-			*(Video_Mem_ptr + (y << 9) + x) = WHITE; //make every pixel black
+			*(Video_Mem_ptr + (y << 9) + x) = WHITE;
 		}
 	}	
 }
- 3dc:	e8bd0030 	pop	{r4, r5}
- 3e0:	e12fff1e 	bx	lr
+ 484:	e8bd0030 	pop	{r4, r5}
+ 488:	e12fff1e 	bx	lr
 
-000003e4 <RedScreen>:
-
-void RedScreen(){
- 3e4:	e92d0030 	push	{r4, r5}
-	*(Video_In_DMA_ptr + 3) = 0x0;
- 3e8:	e3003b88 	movw	r3, #2952	; 0xb88
- 3ec:	e3403000 	movt	r3, #0
- 3f0:	e5933004 	ldr	r3, [r3, #4]
- 3f4:	e3a02000 	mov	r2, #0
- 3f8:	e583200c 	str	r2, [r3, #12]
-	for (y = 0; y < 240; y++) {
- 3fc:	e3003ff4 	movw	r3, #4084	; 0xff4
- 400:	e3403000 	movt	r3, #0
- 404:	e5832000 	str	r2, [r3]
-		for (x = 0; x < 320; x++) {
- 408:	e1a02003 	mov	r2, r3
- 40c:	e3a05000 	mov	r5, #0
-			*(Video_Mem_ptr + (y << 9) + x) = RED; //make every pixel black
- 410:	e3000b88 	movw	r0, #2952	; 0xb88
- 414:	e3400000 	movt	r0, #0
- 418:	e3a04a0f 	mov	r4, #61440	; 0xf000
-}
+0000048c <RedScreen>:
 
 void RedScreen(){
+ 48c:	e92d0030 	push	{r4, r5}
 	*(Video_In_DMA_ptr + 3) = 0x0;
+ 490:	e3003d10 	movw	r3, #3344	; 0xd10
+ 494:	e3403000 	movt	r3, #0
+ 498:	e5933000 	ldr	r3, [r3]
+ 49c:	e3a02000 	mov	r2, #0
+ 4a0:	e583200c 	str	r2, [r3, #12]
 	for (y = 0; y < 240; y++) {
+ 4a4:	e301317c 	movw	r3, #4476	; 0x117c
+ 4a8:	e3403000 	movt	r3, #0
+ 4ac:	e5832000 	str	r2, [r3]
 		for (x = 0; x < 320; x++) {
- 41c:	e300c13f 	movw	r12, #319	; 0x13f
- 420:	e5825004 	str	r5, [r2, #4]
- 424:	e1a03005 	mov	r3, r5
-			*(Video_Mem_ptr + (y << 9) + x) = RED; //make every pixel black
- 428:	e5921000 	ldr	r1, [r2]
- 42c:	e0833481 	add	r3, r3, r1, lsl #9
- 430:	e1a03083 	lsl	r3, r3, #1
- 434:	e5901000 	ldr	r1, [r0]
- 438:	e18140b3 	strh	r4, [r1, r3]
+ 4b0:	e1a02003 	mov	r2, r3
+ 4b4:	e3a05000 	mov	r5, #0
+			*(Video_Mem_ptr + (y << 9) + x) = RED;
+ 4b8:	e3000d10 	movw	r0, #3344	; 0xd10
+ 4bc:	e3400000 	movt	r0, #0
+ 4c0:	e3a04a0f 	mov	r4, #61440	; 0xf000
 }
 
 void RedScreen(){
 	*(Video_In_DMA_ptr + 3) = 0x0;
 	for (y = 0; y < 240; y++) {
 		for (x = 0; x < 320; x++) {
- 43c:	e5923004 	ldr	r3, [r2, #4]
- 440:	e2833001 	add	r3, r3, #1
- 444:	e5823004 	str	r3, [r2, #4]
- 448:	e153000c 	cmp	r3, r12
- 44c:	dafffff5 	ble	428 <RedScreen+0x44>
+ 4c4:	e300c13f 	movw	r12, #319	; 0x13f
+ 4c8:	e5825004 	str	r5, [r2, #4]
+ 4cc:	e1a03005 	mov	r3, r5
+			*(Video_Mem_ptr + (y << 9) + x) = RED;
+ 4d0:	e5921000 	ldr	r1, [r2]
+ 4d4:	e0833481 	add	r3, r3, r1, lsl #9
+ 4d8:	e1a03083 	lsl	r3, r3, #1
+ 4dc:	e5901004 	ldr	r1, [r0, #4]
+ 4e0:	e18140b3 	strh	r4, [r1, r3]
+}
+
+void RedScreen(){
+	*(Video_In_DMA_ptr + 3) = 0x0;
+	for (y = 0; y < 240; y++) {
+		for (x = 0; x < 320; x++) {
+ 4e4:	e5923004 	ldr	r3, [r2, #4]
+ 4e8:	e2833001 	add	r3, r3, #1
+ 4ec:	e5823004 	str	r3, [r2, #4]
+ 4f0:	e153000c 	cmp	r3, r12
+ 4f4:	dafffff5 	ble	4d0 <RedScreen+0x44>
 	}	
 }
 
 void RedScreen(){
 	*(Video_In_DMA_ptr + 3) = 0x0;
 	for (y = 0; y < 240; y++) {
- 450:	e5923000 	ldr	r3, [r2]
- 454:	e2833001 	add	r3, r3, #1
- 458:	e5823000 	str	r3, [r2]
- 45c:	e35300ef 	cmp	r3, #239	; 0xef
- 460:	daffffee 	ble	420 <RedScreen+0x3c>
+ 4f8:	e5923000 	ldr	r3, [r2]
+ 4fc:	e2833001 	add	r3, r3, #1
+ 500:	e5823000 	str	r3, [r2]
+ 504:	e35300ef 	cmp	r3, #239	; 0xef
+ 508:	daffffee 	ble	4c8 <RedScreen+0x3c>
 		for (x = 0; x < 320; x++) {
-			*(Video_Mem_ptr + (y << 9) + x) = RED; //make every pixel black
+			*(Video_Mem_ptr + (y << 9) + x) = RED;
 		}
 	}	
 }
- 464:	e8bd0030 	pop	{r4, r5}
- 468:	e12fff1e 	bx	lr
+ 50c:	e8bd0030 	pop	{r4, r5}
+ 510:	e12fff1e 	bx	lr
 
-0000046c <BlueScreen>:
+00000514 <BlueScreen>:
 
 void BlueScreen(){
- 46c:	e92d0030 	push	{r4, r5}
+ 514:	e92d0030 	push	{r4, r5}
 	*(Video_In_DMA_ptr + 3) = 0x0;
- 470:	e3003b88 	movw	r3, #2952	; 0xb88
- 474:	e3403000 	movt	r3, #0
- 478:	e5933004 	ldr	r3, [r3, #4]
- 47c:	e3a02000 	mov	r2, #0
- 480:	e583200c 	str	r2, [r3, #12]
+ 518:	e3003d10 	movw	r3, #3344	; 0xd10
+ 51c:	e3403000 	movt	r3, #0
+ 520:	e5933000 	ldr	r3, [r3]
+ 524:	e3a02000 	mov	r2, #0
+ 528:	e583200c 	str	r2, [r3, #12]
 	for (y = 0; y < 240; y++) {
- 484:	e3003ff4 	movw	r3, #4084	; 0xff4
- 488:	e3403000 	movt	r3, #0
- 48c:	e5832000 	str	r2, [r3]
+ 52c:	e301317c 	movw	r3, #4476	; 0x117c
+ 530:	e3403000 	movt	r3, #0
+ 534:	e5832000 	str	r2, [r3]
 		for (x = 0; x < 320; x++) {
- 490:	e1a02003 	mov	r2, r3
- 494:	e3a05000 	mov	r5, #0
-			*(Video_Mem_ptr + (y << 9) + x) = BLUE; //make every pixel black
- 498:	e3000b88 	movw	r0, #2952	; 0xb88
- 49c:	e3400000 	movt	r0, #0
- 4a0:	e3a040ff 	mov	r4, #255	; 0xff
+ 538:	e1a02003 	mov	r2, r3
+ 53c:	e3a05000 	mov	r5, #0
+			*(Video_Mem_ptr + (y << 9) + x) = BLUE;
+ 540:	e3000d10 	movw	r0, #3344	; 0xd10
+ 544:	e3400000 	movt	r0, #0
+ 548:	e3a040ff 	mov	r4, #255	; 0xff
 }
 
 void BlueScreen(){
 	*(Video_In_DMA_ptr + 3) = 0x0;
 	for (y = 0; y < 240; y++) {
 		for (x = 0; x < 320; x++) {
- 4a4:	e300c13f 	movw	r12, #319	; 0x13f
- 4a8:	e5825004 	str	r5, [r2, #4]
- 4ac:	e1a03005 	mov	r3, r5
-			*(Video_Mem_ptr + (y << 9) + x) = BLUE; //make every pixel black
- 4b0:	e5921000 	ldr	r1, [r2]
- 4b4:	e0833481 	add	r3, r3, r1, lsl #9
- 4b8:	e1a03083 	lsl	r3, r3, #1
- 4bc:	e5901000 	ldr	r1, [r0]
- 4c0:	e18140b3 	strh	r4, [r1, r3]
+ 54c:	e300c13f 	movw	r12, #319	; 0x13f
+ 550:	e5825004 	str	r5, [r2, #4]
+ 554:	e1a03005 	mov	r3, r5
+			*(Video_Mem_ptr + (y << 9) + x) = BLUE;
+ 558:	e5921000 	ldr	r1, [r2]
+ 55c:	e0833481 	add	r3, r3, r1, lsl #9
+ 560:	e1a03083 	lsl	r3, r3, #1
+ 564:	e5901004 	ldr	r1, [r0, #4]
+ 568:	e18140b3 	strh	r4, [r1, r3]
 }
 
 void BlueScreen(){
 	*(Video_In_DMA_ptr + 3) = 0x0;
 	for (y = 0; y < 240; y++) {
 		for (x = 0; x < 320; x++) {
- 4c4:	e5923004 	ldr	r3, [r2, #4]
- 4c8:	e2833001 	add	r3, r3, #1
- 4cc:	e5823004 	str	r3, [r2, #4]
- 4d0:	e153000c 	cmp	r3, r12
- 4d4:	dafffff5 	ble	4b0 <BlueScreen+0x44>
+ 56c:	e5923004 	ldr	r3, [r2, #4]
+ 570:	e2833001 	add	r3, r3, #1
+ 574:	e5823004 	str	r3, [r2, #4]
+ 578:	e153000c 	cmp	r3, r12
+ 57c:	dafffff5 	ble	558 <BlueScreen+0x44>
 	}	
 }
 
 void BlueScreen(){
 	*(Video_In_DMA_ptr + 3) = 0x0;
 	for (y = 0; y < 240; y++) {
- 4d8:	e5923000 	ldr	r3, [r2]
- 4dc:	e2833001 	add	r3, r3, #1
- 4e0:	e5823000 	str	r3, [r2]
- 4e4:	e35300ef 	cmp	r3, #239	; 0xef
- 4e8:	daffffee 	ble	4a8 <BlueScreen+0x3c>
+ 580:	e5923000 	ldr	r3, [r2]
+ 584:	e2833001 	add	r3, r3, #1
+ 588:	e5823000 	str	r3, [r2]
+ 58c:	e35300ef 	cmp	r3, #239	; 0xef
+ 590:	daffffee 	ble	550 <BlueScreen+0x3c>
 		for (x = 0; x < 320; x++) {
-			*(Video_Mem_ptr + (y << 9) + x) = BLUE; //make every pixel black
+			*(Video_Mem_ptr + (y << 9) + x) = BLUE;
 		}
 	}	
 }
- 4ec:	e8bd0030 	pop	{r4, r5}
- 4f0:	e12fff1e 	bx	lr
+ 594:	e8bd0030 	pop	{r4, r5}
+ 598:	e12fff1e 	bx	lr
 
-000004f4 <GreenScreen>:
+0000059c <GreenScreen>:
 
 void GreenScreen(){
- 4f4:	e92d0030 	push	{r4, r5}
+ 59c:	e92d0030 	push	{r4, r5}
 	*(Video_In_DMA_ptr + 3) = 0x0;
- 4f8:	e3003b88 	movw	r3, #2952	; 0xb88
- 4fc:	e3403000 	movt	r3, #0
- 500:	e5933004 	ldr	r3, [r3, #4]
- 504:	e3a02000 	mov	r2, #0
- 508:	e583200c 	str	r2, [r3, #12]
+ 5a0:	e3003d10 	movw	r3, #3344	; 0xd10
+ 5a4:	e3403000 	movt	r3, #0
+ 5a8:	e5933000 	ldr	r3, [r3]
+ 5ac:	e3a02000 	mov	r2, #0
+ 5b0:	e583200c 	str	r2, [r3, #12]
 	for (y = 0; y < 240; y++) {
- 50c:	e3003ff4 	movw	r3, #4084	; 0xff4
- 510:	e3403000 	movt	r3, #0
- 514:	e5832000 	str	r2, [r3]
+ 5b4:	e301317c 	movw	r3, #4476	; 0x117c
+ 5b8:	e3403000 	movt	r3, #0
+ 5bc:	e5832000 	str	r2, [r3]
 		for (x = 0; x < 320; x++) {
- 518:	e1a02003 	mov	r2, r3
- 51c:	e3a05000 	mov	r5, #0
-			*(Video_Mem_ptr + (y << 9) + x) = GREEN; //make every pixel black
- 520:	e3000b88 	movw	r0, #2952	; 0xb88
- 524:	e3400000 	movt	r0, #0
- 528:	e3a04c0f 	mov	r4, #3840	; 0xf00
+ 5c0:	e1a02003 	mov	r2, r3
+ 5c4:	e3a05000 	mov	r5, #0
+			*(Video_Mem_ptr + (y << 9) + x) = GREEN;
+ 5c8:	e3000d10 	movw	r0, #3344	; 0xd10
+ 5cc:	e3400000 	movt	r0, #0
+ 5d0:	e3a04c0f 	mov	r4, #3840	; 0xf00
 }
 
 void GreenScreen(){
 	*(Video_In_DMA_ptr + 3) = 0x0;
 	for (y = 0; y < 240; y++) {
 		for (x = 0; x < 320; x++) {
- 52c:	e300c13f 	movw	r12, #319	; 0x13f
- 530:	e5825004 	str	r5, [r2, #4]
- 534:	e1a03005 	mov	r3, r5
-			*(Video_Mem_ptr + (y << 9) + x) = GREEN; //make every pixel black
- 538:	e5921000 	ldr	r1, [r2]
- 53c:	e0833481 	add	r3, r3, r1, lsl #9
- 540:	e1a03083 	lsl	r3, r3, #1
- 544:	e5901000 	ldr	r1, [r0]
- 548:	e18140b3 	strh	r4, [r1, r3]
+ 5d4:	e300c13f 	movw	r12, #319	; 0x13f
+ 5d8:	e5825004 	str	r5, [r2, #4]
+ 5dc:	e1a03005 	mov	r3, r5
+			*(Video_Mem_ptr + (y << 9) + x) = GREEN;
+ 5e0:	e5921000 	ldr	r1, [r2]
+ 5e4:	e0833481 	add	r3, r3, r1, lsl #9
+ 5e8:	e1a03083 	lsl	r3, r3, #1
+ 5ec:	e5901004 	ldr	r1, [r0, #4]
+ 5f0:	e18140b3 	strh	r4, [r1, r3]
 }
 
 void GreenScreen(){
 	*(Video_In_DMA_ptr + 3) = 0x0;
 	for (y = 0; y < 240; y++) {
 		for (x = 0; x < 320; x++) {
- 54c:	e5923004 	ldr	r3, [r2, #4]
- 550:	e2833001 	add	r3, r3, #1
- 554:	e5823004 	str	r3, [r2, #4]
- 558:	e153000c 	cmp	r3, r12
- 55c:	dafffff5 	ble	538 <GreenScreen+0x44>
+ 5f4:	e5923004 	ldr	r3, [r2, #4]
+ 5f8:	e2833001 	add	r3, r3, #1
+ 5fc:	e5823004 	str	r3, [r2, #4]
+ 600:	e153000c 	cmp	r3, r12
+ 604:	dafffff5 	ble	5e0 <GreenScreen+0x44>
 	}	
 }
 
 void GreenScreen(){
 	*(Video_In_DMA_ptr + 3) = 0x0;
 	for (y = 0; y < 240; y++) {
- 560:	e5923000 	ldr	r3, [r2]
- 564:	e2833001 	add	r3, r3, #1
- 568:	e5823000 	str	r3, [r2]
- 56c:	e35300ef 	cmp	r3, #239	; 0xef
- 570:	daffffee 	ble	530 <GreenScreen+0x3c>
+ 608:	e5923000 	ldr	r3, [r2]
+ 60c:	e2833001 	add	r3, r3, #1
+ 610:	e5823000 	str	r3, [r2]
+ 614:	e35300ef 	cmp	r3, #239	; 0xef
+ 618:	daffffee 	ble	5d8 <GreenScreen+0x3c>
 		for (x = 0; x < 320; x++) {
-			*(Video_Mem_ptr + (y << 9) + x) = GREEN; //make every pixel black
+			*(Video_Mem_ptr + (y << 9) + x) = GREEN;
 		}
 	}	
 }
- 574:	e8bd0030 	pop	{r4, r5}
- 578:	e12fff1e 	bx	lr
+ 61c:	e8bd0030 	pop	{r4, r5}
+ 620:	e12fff1e 	bx	lr
 
-0000057c <DrawRectangle_filled>:
+00000624 <DrawRectangle_filled>:
+
 
 void DrawRectangle_filled(int off_x, int off_y, int size_x, int size_y, int color){
- 57c:	e92d0070 	push	{r4, r5, r6}
+ 624:	e92d0070 	push	{r4, r5, r6}
 	if(320 <= (off_x + size_x)) off_x = 320 - size_x;
- 580:	e080c002 	add	r12, r0, r2
- 584:	e35c0d05 	cmp	r12, #320	; 0x140
- 588:	a2620d05 	rsbge	r0, r2, #320	; 0x140
- 58c:	e1c05fc0 	bic	r5, r0, r0, asr #31
+ 628:	e080c002 	add	r12, r0, r2
+ 62c:	e35c0d05 	cmp	r12, #320	; 0x140
+ 630:	a2620d05 	rsbge	r0, r2, #320	; 0x140
+ 634:	e1c05fc0 	bic	r5, r0, r0, asr #31
 	if(off_x <= 0 ) off_x = 0;
 	if(240 <= (off_y + size_y)) off_y = 240 - size_y;
- 590:	e0810003 	add	r0, r1, r3
- 594:	e35000ef 	cmp	r0, #239	; 0xef
- 598:	c26310f0 	rsbgt	r1, r3, #240	; 0xf0
- 59c:	e1c11fc1 	bic	r1, r1, r1, asr #31
+ 638:	e0810003 	add	r0, r1, r3
+ 63c:	e35000ef 	cmp	r0, #239	; 0xef
+ 640:	c26310f0 	rsbgt	r1, r3, #240	; 0xf0
+ 644:	e1c11fc1 	bic	r1, r1, r1, asr #31
 	if(off_y <= 0 ) off_y = 0;
 
 	for (y = off_y; y < off_y + size_y; y++) {
- 5a0:	e300cff4 	movw	r12, #4084	; 0xff4
- 5a4:	e340c000 	movt	r12, #0
- 5a8:	e58c1000 	str	r1, [r12]
- 5ac:	e0836001 	add	r6, r3, r1
- 5b0:	e1560001 	cmp	r6, r1
- 5b4:	da000017 	ble	618 <DrawRectangle_filled+0x9c>
+ 648:	e301c17c 	movw	r12, #4476	; 0x117c
+ 64c:	e340c000 	movt	r12, #0
+ 650:	e58c1000 	str	r1, [r12]
+ 654:	e0836001 	add	r6, r3, r1
+ 658:	e1560001 	cmp	r6, r1
+ 65c:	da000017 	ble	6c0 <DrawRectangle_filled+0x9c>
 		for (x = off_x; x < off_x + size_x; x++) {
- 5b8:	e1a0100c 	mov	r1, r12
- 5bc:	e0820005 	add	r0, r2, r5
-			*(Video_Mem_ptr + (y << 9) + x) = color; //make every pixel black
- 5c0:	e300cb88 	movw	r12, #2952	; 0xb88
- 5c4:	e340c000 	movt	r12, #0
- 5c8:	e1dd40bc 	ldrh	r4, [sp, #12]
-	if(off_x <= 0 ) off_x = 0;
-	if(240 <= (off_y + size_y)) off_y = 240 - size_y;
-	if(off_y <= 0 ) off_y = 0;
-
-	for (y = off_y; y < off_y + size_y; y++) {
-		for (x = off_x; x < off_x + size_x; x++) {
- 5cc:	e5815004 	str	r5, [r1, #4]
- 5d0:	e1550000 	cmp	r5, r0
- 5d4:	aa00000a 	bge	604 <DrawRectangle_filled+0x88>
- 5d8:	e1a03005 	mov	r3, r5
-			*(Video_Mem_ptr + (y << 9) + x) = color; //make every pixel black
- 5dc:	e5912000 	ldr	r2, [r1]
- 5e0:	e0833482 	add	r3, r3, r2, lsl #9
- 5e4:	e1a03083 	lsl	r3, r3, #1
- 5e8:	e59c2000 	ldr	r2, [r12]
- 5ec:	e18240b3 	strh	r4, [r2, r3]
+ 660:	e1a0100c 	mov	r1, r12
+ 664:	e0820005 	add	r0, r2, r5
+			*(Video_Mem_ptr + (y << 9) + x) = color;
+ 668:	e300cd10 	movw	r12, #3344	; 0xd10
+ 66c:	e340c000 	movt	r12, #0
+ 670:	e1dd40bc 	ldrh	r4, [sp, #12]
 	if(off_x <= 0 ) off_x = 0;
 	if(240 <= (off_y + size_y)) off_y = 240 - size_y;
 	if(off_y <= 0 ) off_y = 0;
 
 	for (y = off_y; y < off_y + size_y; y++) {
 		for (x = off_x; x < off_x + size_x; x++) {
- 5f0:	e5913004 	ldr	r3, [r1, #4]
- 5f4:	e2833001 	add	r3, r3, #1
- 5f8:	e5813004 	str	r3, [r1, #4]
- 5fc:	e1530000 	cmp	r3, r0
- 600:	bafffff5 	blt	5dc <DrawRectangle_filled+0x60>
+ 674:	e5815004 	str	r5, [r1, #4]
+ 678:	e1550000 	cmp	r5, r0
+ 67c:	aa00000a 	bge	6ac <DrawRectangle_filled+0x88>
+ 680:	e1a03005 	mov	r3, r5
+			*(Video_Mem_ptr + (y << 9) + x) = color;
+ 684:	e5912000 	ldr	r2, [r1]
+ 688:	e0833482 	add	r3, r3, r2, lsl #9
+ 68c:	e1a03083 	lsl	r3, r3, #1
+ 690:	e59c2004 	ldr	r2, [r12, #4]
+ 694:	e18240b3 	strh	r4, [r2, r3]
+	if(off_x <= 0 ) off_x = 0;
+	if(240 <= (off_y + size_y)) off_y = 240 - size_y;
+	if(off_y <= 0 ) off_y = 0;
+
+	for (y = off_y; y < off_y + size_y; y++) {
+		for (x = off_x; x < off_x + size_x; x++) {
+ 698:	e5913004 	ldr	r3, [r1, #4]
+ 69c:	e2833001 	add	r3, r3, #1
+ 6a0:	e5813004 	str	r3, [r1, #4]
+ 6a4:	e1530000 	cmp	r3, r0
+ 6a8:	bafffff5 	blt	684 <DrawRectangle_filled+0x60>
 	if(320 <= (off_x + size_x)) off_x = 320 - size_x;
 	if(off_x <= 0 ) off_x = 0;
 	if(240 <= (off_y + size_y)) off_y = 240 - size_y;
 	if(off_y <= 0 ) off_y = 0;
 
 	for (y = off_y; y < off_y + size_y; y++) {
- 604:	e5913000 	ldr	r3, [r1]
- 608:	e2833001 	add	r3, r3, #1
- 60c:	e5813000 	str	r3, [r1]
- 610:	e1560003 	cmp	r6, r3
- 614:	caffffec 	bgt	5cc <DrawRectangle_filled+0x50>
+ 6ac:	e5913000 	ldr	r3, [r1]
+ 6b0:	e2833001 	add	r3, r3, #1
+ 6b4:	e5813000 	str	r3, [r1]
+ 6b8:	e1560003 	cmp	r6, r3
+ 6bc:	caffffec 	bgt	674 <DrawRectangle_filled+0x50>
 		for (x = off_x; x < off_x + size_x; x++) {
-			*(Video_Mem_ptr + (y << 9) + x) = color; //make every pixel black
+			*(Video_Mem_ptr + (y << 9) + x) = color;
 		}
 	}	
- 618:	e8bd0070 	pop	{r4, r5, r6}
- 61c:	e12fff1e 	bx	lr
+}
+ 6c0:	e8bd0070 	pop	{r4, r5, r6}
+ 6c4:	e12fff1e 	bx	lr
 
-00000620 <main>:
-int bW=0; //0 if not b&w or has been already inverted backward 	1 if inverted forward
-int key_value;
-int off_x = 50;
-int off_y = 50;
+000006c8 <DrawRectangle_empty>:
 
-int main(void) {
- 620:	e92d41f0 	push	{r4, r5, r6, r7, r8, lr}
- 624:	e24dd008 	sub	sp, sp, #8
-	while(1){
-		*(Video_In_DMA_ptr + 3) = 0x4;
- 628:	e3004b88 	movw	r4, #2952	; 0xb88
- 62c:	e3404000 	movt	r4, #0
- 630:	e3a07004 	mov	r7, #4
-		if(*(KEY_ptr) != 0){
-			key_value = *(KEY_ptr);
- 634:	e3008ff4 	movw	r8, #4084	; 0xff4
- 638:	e3408000 	movt	r8, #0
-				case KEY3:		//KEY03
-					off_x--;
-					break;
-			}
+
+void DrawRectangle_empty(int off_x, int off_y, int size_x, int size_y, int thick, int color){
+ 6c8:	e92d07f0 	push	{r4, r5, r6, r7, r8, r9, r10}
+ 6cc:	e59d701c 	ldr	r7, [sp, #28]
+	if(320 <= (off_x + size_x)) off_x = 320 - size_x;
+ 6d0:	e080c002 	add	r12, r0, r2
+ 6d4:	e35c0d05 	cmp	r12, #320	; 0x140
+ 6d8:	a2620d05 	rsbge	r0, r2, #320	; 0x140
+ 6dc:	e1c05fc0 	bic	r5, r0, r0, asr #31
+	if(off_x <= 0 ) off_x = 0;
+	if(240 <= (off_y + size_y)) off_y = 240 - size_y;
+ 6e0:	e0810003 	add	r0, r1, r3
+ 6e4:	e35000ef 	cmp	r0, #239	; 0xef
+ 6e8:	c26310f0 	rsbgt	r1, r3, #240	; 0xf0
+ 6ec:	e1c1cfc1 	bic	r12, r1, r1, asr #31
+	if(off_y <= 0 ) off_y = 0;
+
+	for (y = off_y; y < off_y + size_y; y++) {
+ 6f0:	e301117c 	movw	r1, #4476	; 0x117c
+ 6f4:	e3401000 	movt	r1, #0
+ 6f8:	e581c000 	str	r12, [r1]
+ 6fc:	e083800c 	add	r8, r3, r12
+ 700:	e158000c 	cmp	r8, r12
+ 704:	da000023 	ble	798 <DrawRectangle_empty+0xd0>
+		for (x = off_x; x < off_x + size_x; x++) {
+ 708:	e301117c 	movw	r1, #4476	; 0x117c
+ 70c:	e3401000 	movt	r1, #0
+ 710:	e0820005 	add	r0, r2, r5
+			if (( (y < off_y + thick) && (off_y + size_y - thick < y) ) && ( (x < off_x + thick) && (off_x + size_x - thick < x)) )
+ 714:	e087c00c 	add	r12, r7, r12
+ 718:	e0674008 	rsb	r4, r7, r8
+ 71c:	e0876005 	add	r6, r7, r5
+ 720:	e0677000 	rsb	r7, r7, r0
+				*(Video_Mem_ptr + (y << 9) + x) = color;
+ 724:	e300ad10 	movw	r10, #3344	; 0xd10
+ 728:	e340a000 	movt	r10, #0
+ 72c:	e1dd92b0 	ldrh	r9, [sp, #32]
+	if(off_x <= 0 ) off_x = 0;
+	if(240 <= (off_y + size_y)) off_y = 240 - size_y;
+	if(off_y <= 0 ) off_y = 0;
+
+	for (y = off_y; y < off_y + size_y; y++) {
+		for (x = off_x; x < off_x + size_x; x++) {
+ 730:	e5815004 	str	r5, [r1, #4]
+ 734:	e1550000 	cmp	r5, r0
+ 738:	aa000011 	bge	784 <DrawRectangle_empty+0xbc>
+ 73c:	e1a03005 	mov	r3, r5
+			if (( (y < off_y + thick) && (off_y + size_y - thick < y) ) && ( (x < off_x + thick) && (off_x + size_x - thick < x)) )
+ 740:	e5912000 	ldr	r2, [r1]
+ 744:	e15c0002 	cmp	r12, r2
+ 748:	da000008 	ble	770 <DrawRectangle_empty+0xa8>
+ 74c:	e1520004 	cmp	r2, r4
+ 750:	da000006 	ble	770 <DrawRectangle_empty+0xa8>
+ 754:	e1560003 	cmp	r6, r3
+ 758:	da000004 	ble	770 <DrawRectangle_empty+0xa8>
+ 75c:	e1570003 	cmp	r7, r3
+				*(Video_Mem_ptr + (y << 9) + x) = color;
+ 760:	b0833482 	addlt	r3, r3, r2, lsl #9
+ 764:	b1a03083 	lsllt	r3, r3, #1
+ 768:	b59a2004 	ldrlt	r2, [r10, #4]
+ 76c:	b18290b3 	strhlt	r9, [r2, r3]
+	if(off_x <= 0 ) off_x = 0;
+	if(240 <= (off_y + size_y)) off_y = 240 - size_y;
+	if(off_y <= 0 ) off_y = 0;
+
+	for (y = off_y; y < off_y + size_y; y++) {
+		for (x = off_x; x < off_x + size_x; x++) {
+ 770:	e5913004 	ldr	r3, [r1, #4]
+ 774:	e2833001 	add	r3, r3, #1
+ 778:	e5813004 	str	r3, [r1, #4]
+ 77c:	e1530000 	cmp	r3, r0
+ 780:	baffffee 	blt	740 <DrawRectangle_empty+0x78>
+	if(320 <= (off_x + size_x)) off_x = 320 - size_x;
+	if(off_x <= 0 ) off_x = 0;
+	if(240 <= (off_y + size_y)) off_y = 240 - size_y;
+	if(off_y <= 0 ) off_y = 0;
+
+	for (y = off_y; y < off_y + size_y; y++) {
+ 784:	e5913000 	ldr	r3, [r1]
+ 788:	e2833001 	add	r3, r3, #1
+ 78c:	e5813000 	str	r3, [r1]
+ 790:	e1580003 	cmp	r8, r3
+ 794:	caffffe5 	bgt	730 <DrawRectangle_empty+0x68>
+		for (x = off_x; x < off_x + size_x; x++) {
+			if (( (y < off_y + thick) && (off_y + size_y - thick < y) ) && ( (x < off_x + thick) && (off_x + size_x - thick < x)) )
+				*(Video_Mem_ptr + (y << 9) + x) = color;
 		}
-		DrawRectangle_filled(off_x, off_y, 50, 50, GREEN|RED);
- 63c:	e3a06cff 	mov	r6, #65280	; 0xff00
- 640:	e3a05032 	mov	r5, #50	; 0x32
+	}	
+ 798:	e8bd07f0 	pop	{r4, r5, r6, r7, r8, r9, r10}
+ 79c:	e12fff1e 	bx	lr
+
+000007a0 <main>:
 int off_x = 50;
 int off_y = 50;
+short fixeldata[320][240];
+short (*fixel_ptr)[240] = fixeldata;
 
 int main(void) {
+ 7a0:	e92d45f0 	push	{r4, r5, r6, r7, r8, r10, lr}
+ 7a4:	e24dd00c 	sub	sp, sp, #12
 	while(1){
 		*(Video_In_DMA_ptr + 3) = 0x4;
- 644:	e5943004 	ldr	r3, [r4, #4]
- 648:	e583700c 	str	r7, [r3, #12]
+ 7a8:	e3005d10 	movw	r5, #3344	; 0xd10
+ 7ac:	e3405000 	movt	r5, #0
+ 7b0:	e3a04004 	mov	r4, #4
+		
 		if(*(KEY_ptr) != 0){
- 64c:	e5943008 	ldr	r3, [r4, #8]
- 650:	e5932000 	ldr	r2, [r3]
- 654:	e3520000 	cmp	r2, #0
- 658:	0a00001c 	beq	6d0 <main+0xb0>
 			key_value = *(KEY_ptr);
- 65c:	e5933000 	ldr	r3, [r3]
- 660:	e5883008 	str	r3, [r8, #8]
+ 7b4:	e30760e4 	movw	r6, #28900	; 0x70e4
+ 7b8:	e3406002 	movt	r6, #2
 			switch (key_value) {
- 664:	e2433001 	sub	r3, r3, #1
- 668:	e3530007 	cmp	r3, #7
- 66c:	979ff103 	ldrls	pc, [pc, r3, lsl #2]
- 670:	ea000016 	b	6d0 <main+0xb0>
- 674:	00000694 	.word	0x00000694
- 678:	000006a4 	.word	0x000006a4
- 67c:	000006d0 	.word	0x000006d0
- 680:	000006b4 	.word	0x000006b4
- 684:	000006d0 	.word	0x000006d0
- 688:	000006d0 	.word	0x000006d0
- 68c:	000006d0 	.word	0x000006d0
- 690:	000006c4 	.word	0x000006c4
 				case KEY0:		//KEY00
-					off_x++;
- 694:	e594300c 	ldr	r3, [r4, #12]
- 698:	e2833001 	add	r3, r3, #1
- 69c:	e584300c 	str	r3, [r4, #12]
+					DrawRectangle_empty(100,100,80,80,10,RED);
+ 7bc:	e3a0a00a 	mov	r10, #10
+ 7c0:	e3a08a0f 	mov	r8, #61440	; 0xf000
+ 7c4:	e3a07064 	mov	r7, #100	; 0x64
+short fixeldata[320][240];
+short (*fixel_ptr)[240] = fixeldata;
+
+int main(void) {
+	while(1){
+		*(Video_In_DMA_ptr + 3) = 0x4;
+ 7c8:	e5951000 	ldr	r1, [r5]
+		
+		if(*(KEY_ptr) != 0){
+ 7cc:	e5952008 	ldr	r2, [r5, #8]
+short fixeldata[320][240];
+short (*fixel_ptr)[240] = fixeldata;
+
+int main(void) {
+	while(1){
+		*(Video_In_DMA_ptr + 3) = 0x4;
+ 7d0:	e581400c 	str	r4, [r1, #12]
+		
+		if(*(KEY_ptr) != 0){
+ 7d4:	e5923000 	ldr	r3, [r2]
+ 7d8:	e3530000 	cmp	r3, #0
+ 7dc:	0afffffb 	beq	7d0 <main+0x30>
+			key_value = *(KEY_ptr);
+ 7e0:	e5923000 	ldr	r3, [r2]
+ 7e4:	e5063760 	str	r3, [r6, #-1888]	; 0xfffff8a0
+			switch (key_value) {
+ 7e8:	e2433001 	sub	r3, r3, #1
+ 7ec:	e3530007 	cmp	r3, #7
+ 7f0:	979ff103 	ldrls	pc, [pc, r3, lsl #2]
+ 7f4:	eafffff5 	b	7d0 <main+0x30>
+ 7f8:	00000818 	.word	0x00000818
+ 7fc:	00000838 	.word	0x00000838
+ 800:	000007d0 	.word	0x000007d0
+ 804:	0000084c 	.word	0x0000084c
+ 808:	000007d0 	.word	0x000007d0
+ 80c:	000007d0 	.word	0x000007d0
+ 810:	000007d0 	.word	0x000007d0
+ 814:	00000860 	.word	0x00000860
+				case KEY0:		//KEY00
+					DrawRectangle_empty(100,100,80,80,10,RED);
+ 818:	e58da000 	str	r10, [sp]
+ 81c:	e58d8004 	str	r8, [sp, #4]
+ 820:	e1a00007 	mov	r0, r7
+ 824:	e1a01007 	mov	r1, r7
+ 828:	e3a02050 	mov	r2, #80	; 0x50
+ 82c:	e1a03002 	mov	r3, r2
+ 830:	ebffffa4 	bl	6c8 <DrawRectangle_empty>
+					//while (*KEY_ptr != 0);	//while the key is pressed down dont do anything
 					break;
- 6a0:	ea00000a 	b	6d0 <main+0xb0>
+ 834:	eaffffe3 	b	7c8 <main+0x28>
 				case KEY1:		//KEY01
-					off_y++;
- 6a4:	e5943010 	ldr	r3, [r4, #16]
- 6a8:	e2833001 	add	r3, r3, #1
- 6ac:	e5843010 	str	r3, [r4, #16]
+					*(Video_In_DMA_ptr + 3)	= 0x4;
+ 838:	e581400c 	str	r4, [r1, #12]
+					while (*KEY_ptr != 0);	//while the key is pressed down dont do anything;	
+ 83c:	e5923000 	ldr	r3, [r2]
+ 840:	e3530000 	cmp	r3, #0
+ 844:	1afffffc 	bne	83c <main+0x9c>
+ 848:	eaffffde 	b	7c8 <main+0x28>
 					break;
- 6b0:	ea000006 	b	6d0 <main+0xb0>
 				case KEY2:		//KEY02
-					off_y--;
- 6b4:	e5943010 	ldr	r3, [r4, #16]
- 6b8:	e2433001 	sub	r3, r3, #1
- 6bc:	e5843010 	str	r3, [r4, #16]
+					*(Video_In_DMA_ptr + 3)	= 0x4;
+ 84c:	e581400c 	str	r4, [r1, #12]
+					while (*KEY_ptr != 0);	//while the key is pressed down dont do anything;	
+ 850:	e5923000 	ldr	r3, [r2]
+ 854:	e3530000 	cmp	r3, #0
+ 858:	1afffffc 	bne	850 <main+0xb0>
+ 85c:	eaffffd9 	b	7c8 <main+0x28>
 					break;
- 6c0:	ea000002 	b	6d0 <main+0xb0>
 				case KEY3:		//KEY03
-					off_x--;
- 6c4:	e594300c 	ldr	r3, [r4, #12]
- 6c8:	e2433001 	sub	r3, r3, #1
- 6cc:	e584300c 	str	r3, [r4, #12]
-					break;
-			}
-		}
-		DrawRectangle_filled(off_x, off_y, 50, 50, GREEN|RED);
- 6d0:	e594000c 	ldr	r0, [r4, #12]
- 6d4:	e5941010 	ldr	r1, [r4, #16]
- 6d8:	e58d6000 	str	r6, [sp]
- 6dc:	e1a02005 	mov	r2, r5
- 6e0:	e1a03005 	mov	r3, r5
- 6e4:	ebffffa4 	bl	57c <DrawRectangle_filled>
-	}
- 6e8:	eaffffd5 	b	644 <main+0x24>
+					fixelData();
+ 860:	ebfffe9f 	bl	2e4 <fixelData>
+					while (*KEY_ptr != 0);	//while the key is pressed down dont do anything
+ 864:	e5952008 	ldr	r2, [r5, #8]
+ 868:	e5923000 	ldr	r3, [r2]
+ 86c:	e3530000 	cmp	r3, #0
+ 870:	1afffffc 	bne	868 <main+0xc8>
+ 874:	eaffffd3 	b	7c8 <main+0x28>
 
-000006ec <atexit>:
- 6ec:	e1a01000 	mov	r1, r0
- 6f0:	e3a00000 	mov	r0, #0
- 6f4:	e92d4008 	push	{r3, lr}
- 6f8:	e1a02000 	mov	r2, r0
- 6fc:	e1a03000 	mov	r3, r0
- 700:	eb00000e 	bl	740 <__register_exitproc>
- 704:	e8bd4008 	pop	{r3, lr}
- 708:	e12fff1e 	bx	lr
+00000878 <atexit>:
+ 878:	e1a01000 	mov	r1, r0
+ 87c:	e3a00000 	mov	r0, #0
+ 880:	e92d4008 	push	{r3, lr}
+ 884:	e1a02000 	mov	r2, r0
+ 888:	e1a03000 	mov	r3, r0
+ 88c:	eb00000e 	bl	8cc <__register_exitproc>
+ 890:	e8bd4008 	pop	{r3, lr}
+ 894:	e12fff1e 	bx	lr
 
-0000070c <exit>:
- 70c:	e92d4008 	push	{r3, lr}
- 710:	e3a01000 	mov	r1, #0
- 714:	e1a04000 	mov	r4, r0
- 718:	eb000045 	bl	834 <__call_exitprocs>
- 71c:	e59f3018 	ldr	r3, [pc, #24]	; 73c <exit+0x30>
- 720:	e5930000 	ldr	r0, [r3]
- 724:	e590303c 	ldr	r3, [r0, #60]	; 0x3c
- 728:	e3530000 	cmp	r3, #0
- 72c:	11a0e00f 	movne	lr, pc
- 730:	112fff13 	bxne	r3
- 734:	e1a00004 	mov	r0, r4
- 738:	eb0000c9 	bl	a64 <_exit>
- 73c:	00000b24 	.word	0x00000b24
+00000898 <exit>:
+ 898:	e92d4008 	push	{r3, lr}
+ 89c:	e3a01000 	mov	r1, #0
+ 8a0:	e1a04000 	mov	r4, r0
+ 8a4:	eb000045 	bl	9c0 <__call_exitprocs>
+ 8a8:	e59f3018 	ldr	r3, [pc, #24]	; 8c8 <exit+0x30>
+ 8ac:	e5930000 	ldr	r0, [r3]
+ 8b0:	e590303c 	ldr	r3, [r0, #60]	; 0x3c
+ 8b4:	e3530000 	cmp	r3, #0
+ 8b8:	11a0e00f 	movne	lr, pc
+ 8bc:	112fff13 	bxne	r3
+ 8c0:	e1a00004 	mov	r0, r4
+ 8c4:	eb0000c9 	bl	bf0 <_exit>
+ 8c8:	00000cb0 	.word	0x00000cb0
 
-00000740 <__register_exitproc>:
- 740:	e59fc0e4 	ldr	r12, [pc, #228]	; 82c <__register_exitproc+0xec>
- 744:	e92d41f0 	push	{r4, r5, r6, r7, r8, lr}
- 748:	e59c4000 	ldr	r4, [r12]
- 74c:	e594c148 	ldr	r12, [r4, #328]	; 0x148
- 750:	e35c0000 	cmp	r12, #0
- 754:	0284cf53 	addeq	r12, r4, #332	; 0x14c
- 758:	e59c5004 	ldr	r5, [r12, #4]
- 75c:	0584c148 	streq	r12, [r4, #328]	; 0x148
- 760:	e355001f 	cmp	r5, #31
- 764:	e24dd010 	sub	sp, sp, #16
- 768:	e1a06000 	mov	r6, r0
- 76c:	da000015 	ble	7c8 <__register_exitproc+0x88>
- 770:	e59f00b8 	ldr	r0, [pc, #184]	; 830 <__register_exitproc+0xf0>
- 774:	e3500000 	cmp	r0, #0
- 778:	1a000001 	bne	784 <__register_exitproc+0x44>
- 77c:	e3e00000 	mvn	r0, #0
- 780:	ea000018 	b	7e8 <__register_exitproc+0xa8>
- 784:	e3a00e19 	mov	r0, #400	; 0x190
- 788:	e58d100c 	str	r1, [sp, #12]
- 78c:	e58d2008 	str	r2, [sp, #8]
- 790:	e58d3004 	str	r3, [sp, #4]
- 794:	e320f000 	nop	{0}
- 798:	e250c000 	subs	r12, r0, #0
- 79c:	e59d100c 	ldr	r1, [sp, #12]
- 7a0:	e59d2008 	ldr	r2, [sp, #8]
- 7a4:	e59d3004 	ldr	r3, [sp, #4]
- 7a8:	0afffff3 	beq	77c <__register_exitproc+0x3c>
- 7ac:	e5945148 	ldr	r5, [r4, #328]	; 0x148
- 7b0:	e3a00000 	mov	r0, #0
- 7b4:	e58c0004 	str	r0, [r12, #4]
- 7b8:	e58c5000 	str	r5, [r12]
- 7bc:	e584c148 	str	r12, [r4, #328]	; 0x148
- 7c0:	e58c0188 	str	r0, [r12, #392]	; 0x188
- 7c4:	e58c018c 	str	r0, [r12, #396]	; 0x18c
- 7c8:	e3560000 	cmp	r6, #0
- 7cc:	e59c4004 	ldr	r4, [r12, #4]
- 7d0:	1a000007 	bne	7f4 <__register_exitproc+0xb4>
- 7d4:	e2843002 	add	r3, r4, #2
- 7d8:	e2844001 	add	r4, r4, #1
- 7dc:	e78c1103 	str	r1, [r12, r3, lsl #2]
- 7e0:	e58c4004 	str	r4, [r12, #4]
- 7e4:	e3a00000 	mov	r0, #0
- 7e8:	e28dd010 	add	sp, sp, #16
- 7ec:	e8bd41f0 	pop	{r4, r5, r6, r7, r8, lr}
- 7f0:	e12fff1e 	bx	lr
- 7f4:	e3a00001 	mov	r0, #1
- 7f8:	e1a00410 	lsl	r0, r0, r4
- 7fc:	e08c8104 	add	r8, r12, r4, lsl #2
- 800:	e3560002 	cmp	r6, #2
- 804:	e59c7188 	ldr	r7, [r12, #392]	; 0x188
- 808:	e5883108 	str	r3, [r8, #264]	; 0x108
- 80c:	059c318c 	ldreq	r3, [r12, #396]	; 0x18c
- 810:	e1877000 	orr	r7, r7, r0
- 814:	01830000 	orreq	r0, r3, r0
- 818:	e1a05008 	mov	r5, r8
- 81c:	e5882088 	str	r2, [r8, #136]	; 0x88
- 820:	e58c7188 	str	r7, [r12, #392]	; 0x188
- 824:	058c018c 	streq	r0, [r12, #396]	; 0x18c
- 828:	eaffffe9 	b	7d4 <__register_exitproc+0x94>
- 82c:	00000b24 	.word	0x00000b24
- 830:	00000000 	.word	0x00000000
+000008cc <__register_exitproc>:
+ 8cc:	e59fc0e4 	ldr	r12, [pc, #228]	; 9b8 <__register_exitproc+0xec>
+ 8d0:	e92d41f0 	push	{r4, r5, r6, r7, r8, lr}
+ 8d4:	e59c4000 	ldr	r4, [r12]
+ 8d8:	e594c148 	ldr	r12, [r4, #328]	; 0x148
+ 8dc:	e35c0000 	cmp	r12, #0
+ 8e0:	0284cf53 	addeq	r12, r4, #332	; 0x14c
+ 8e4:	e59c5004 	ldr	r5, [r12, #4]
+ 8e8:	0584c148 	streq	r12, [r4, #328]	; 0x148
+ 8ec:	e355001f 	cmp	r5, #31
+ 8f0:	e24dd010 	sub	sp, sp, #16
+ 8f4:	e1a06000 	mov	r6, r0
+ 8f8:	da000015 	ble	954 <__register_exitproc+0x88>
+ 8fc:	e59f00b8 	ldr	r0, [pc, #184]	; 9bc <__register_exitproc+0xf0>
+ 900:	e3500000 	cmp	r0, #0
+ 904:	1a000001 	bne	910 <__register_exitproc+0x44>
+ 908:	e3e00000 	mvn	r0, #0
+ 90c:	ea000018 	b	974 <__register_exitproc+0xa8>
+ 910:	e3a00e19 	mov	r0, #400	; 0x190
+ 914:	e58d100c 	str	r1, [sp, #12]
+ 918:	e58d2008 	str	r2, [sp, #8]
+ 91c:	e58d3004 	str	r3, [sp, #4]
+ 920:	e320f000 	nop	{0}
+ 924:	e250c000 	subs	r12, r0, #0
+ 928:	e59d100c 	ldr	r1, [sp, #12]
+ 92c:	e59d2008 	ldr	r2, [sp, #8]
+ 930:	e59d3004 	ldr	r3, [sp, #4]
+ 934:	0afffff3 	beq	908 <__register_exitproc+0x3c>
+ 938:	e5945148 	ldr	r5, [r4, #328]	; 0x148
+ 93c:	e3a00000 	mov	r0, #0
+ 940:	e58c0004 	str	r0, [r12, #4]
+ 944:	e58c5000 	str	r5, [r12]
+ 948:	e584c148 	str	r12, [r4, #328]	; 0x148
+ 94c:	e58c0188 	str	r0, [r12, #392]	; 0x188
+ 950:	e58c018c 	str	r0, [r12, #396]	; 0x18c
+ 954:	e3560000 	cmp	r6, #0
+ 958:	e59c4004 	ldr	r4, [r12, #4]
+ 95c:	1a000007 	bne	980 <__register_exitproc+0xb4>
+ 960:	e2843002 	add	r3, r4, #2
+ 964:	e2844001 	add	r4, r4, #1
+ 968:	e78c1103 	str	r1, [r12, r3, lsl #2]
+ 96c:	e58c4004 	str	r4, [r12, #4]
+ 970:	e3a00000 	mov	r0, #0
+ 974:	e28dd010 	add	sp, sp, #16
+ 978:	e8bd41f0 	pop	{r4, r5, r6, r7, r8, lr}
+ 97c:	e12fff1e 	bx	lr
+ 980:	e3a00001 	mov	r0, #1
+ 984:	e1a00410 	lsl	r0, r0, r4
+ 988:	e08c8104 	add	r8, r12, r4, lsl #2
+ 98c:	e3560002 	cmp	r6, #2
+ 990:	e59c7188 	ldr	r7, [r12, #392]	; 0x188
+ 994:	e5883108 	str	r3, [r8, #264]	; 0x108
+ 998:	059c318c 	ldreq	r3, [r12, #396]	; 0x18c
+ 99c:	e1877000 	orr	r7, r7, r0
+ 9a0:	01830000 	orreq	r0, r3, r0
+ 9a4:	e1a05008 	mov	r5, r8
+ 9a8:	e5882088 	str	r2, [r8, #136]	; 0x88
+ 9ac:	e58c7188 	str	r7, [r12, #392]	; 0x188
+ 9b0:	058c018c 	streq	r0, [r12, #396]	; 0x18c
+ 9b4:	eaffffe9 	b	960 <__register_exitproc+0x94>
+ 9b8:	00000cb0 	.word	0x00000cb0
+ 9bc:	00000000 	.word	0x00000000
 
-00000834 <__call_exitprocs>:
- 834:	e92d4ff0 	push	{r4, r5, r6, r7, r8, r9, r10, r11, lr}
- 838:	e59f3168 	ldr	r3, [pc, #360]	; 9a8 <__call_exitprocs+0x174>
- 83c:	e5933000 	ldr	r3, [r3]
- 840:	e24dd014 	sub	sp, sp, #20
- 844:	e58d3004 	str	r3, [sp, #4]
- 848:	e2833f52 	add	r3, r3, #328	; 0x148
- 84c:	e58d0008 	str	r0, [sp, #8]
- 850:	e58d300c 	str	r3, [sp, #12]
- 854:	e1a07001 	mov	r7, r1
- 858:	e3a08001 	mov	r8, #1
- 85c:	e59d3004 	ldr	r3, [sp, #4]
- 860:	e5936148 	ldr	r6, [r3, #328]	; 0x148
- 864:	e3560000 	cmp	r6, #0
- 868:	e59db00c 	ldr	r11, [sp, #12]
- 86c:	0a000033 	beq	940 <__call_exitprocs+0x10c>
- 870:	e5965004 	ldr	r5, [r6, #4]
- 874:	e2554001 	subs	r4, r5, #1
- 878:	5286a088 	addpl	r10, r6, #136	; 0x88
- 87c:	5285501f 	addpl	r5, r5, #31
- 880:	508a5105 	addpl	r5, r10, r5, lsl #2
- 884:	5a000007 	bpl	8a8 <__call_exitprocs+0x74>
- 888:	ea000029 	b	934 <__call_exitprocs+0x100>
- 88c:	e5953000 	ldr	r3, [r5]
- 890:	e1530007 	cmp	r3, r7
- 894:	0a000005 	beq	8b0 <__call_exitprocs+0x7c>
- 898:	e2444001 	sub	r4, r4, #1
- 89c:	e3740001 	cmn	r4, #1
- 8a0:	e2455004 	sub	r5, r5, #4
- 8a4:	0a000022 	beq	934 <__call_exitprocs+0x100>
- 8a8:	e3570000 	cmp	r7, #0
- 8ac:	1afffff6 	bne	88c <__call_exitprocs+0x58>
- 8b0:	e5963004 	ldr	r3, [r6, #4]
- 8b4:	e06a2005 	rsb	r2, r10, r5
- 8b8:	e2433001 	sub	r3, r3, #1
- 8bc:	e0862002 	add	r2, r6, r2
- 8c0:	e1530004 	cmp	r3, r4
- 8c4:	e5123078 	ldr	r3, [r2, #-120]	; 0xffffff88
- 8c8:	13a01000 	movne	r1, #0
- 8cc:	05864004 	streq	r4, [r6, #4]
- 8d0:	15021078 	strne	r1, [r2, #-120]	; 0xffffff88
- 8d4:	e3530000 	cmp	r3, #0
- 8d8:	0affffee 	beq	898 <__call_exitprocs+0x64>
- 8dc:	e1a02418 	lsl	r2, r8, r4
- 8e0:	e5961188 	ldr	r1, [r6, #392]	; 0x188
- 8e4:	e1120001 	tst	r2, r1
- 8e8:	e5969004 	ldr	r9, [r6, #4]
- 8ec:	0a000016 	beq	94c <__call_exitprocs+0x118>
- 8f0:	e596118c 	ldr	r1, [r6, #396]	; 0x18c
- 8f4:	e1120001 	tst	r2, r1
- 8f8:	1a000016 	bne	958 <__call_exitprocs+0x124>
- 8fc:	e59d0008 	ldr	r0, [sp, #8]
- 900:	e5151080 	ldr	r1, [r5, #-128]	; 0xffffff80
- 904:	e1a0e00f 	mov	lr, pc
- 908:	e12fff13 	bx	r3
- 90c:	e5963004 	ldr	r3, [r6, #4]
- 910:	e1530009 	cmp	r3, r9
- 914:	1affffd0 	bne	85c <__call_exitprocs+0x28>
- 918:	e59b3000 	ldr	r3, [r11]
- 91c:	e1530006 	cmp	r3, r6
- 920:	1affffcd 	bne	85c <__call_exitprocs+0x28>
- 924:	e2444001 	sub	r4, r4, #1
- 928:	e3740001 	cmn	r4, #1
- 92c:	e2455004 	sub	r5, r5, #4
- 930:	1affffdc 	bne	8a8 <__call_exitprocs+0x74>
- 934:	e59f1070 	ldr	r1, [pc, #112]	; 9ac <__call_exitprocs+0x178>
- 938:	e3510000 	cmp	r1, #0
- 93c:	1a000009 	bne	968 <__call_exitprocs+0x134>
- 940:	e28dd014 	add	sp, sp, #20
- 944:	e8bd4ff0 	pop	{r4, r5, r6, r7, r8, r9, r10, r11, lr}
- 948:	e12fff1e 	bx	lr
- 94c:	e1a0e00f 	mov	lr, pc
- 950:	e12fff13 	bx	r3
- 954:	eaffffec 	b	90c <__call_exitprocs+0xd8>
- 958:	e5150080 	ldr	r0, [r5, #-128]	; 0xffffff80
- 95c:	e1a0e00f 	mov	lr, pc
- 960:	e12fff13 	bx	r3
- 964:	eaffffe8 	b	90c <__call_exitprocs+0xd8>
- 968:	e5963004 	ldr	r3, [r6, #4]
- 96c:	e3530000 	cmp	r3, #0
- 970:	e5963000 	ldr	r3, [r6]
- 974:	1a000008 	bne	99c <__call_exitprocs+0x168>
- 978:	e3530000 	cmp	r3, #0
- 97c:	0a000006 	beq	99c <__call_exitprocs+0x168>
- 980:	e1a00006 	mov	r0, r6
- 984:	e58b3000 	str	r3, [r11]
- 988:	e320f000 	nop	{0}
- 98c:	e59b6000 	ldr	r6, [r11]
- 990:	e3560000 	cmp	r6, #0
- 994:	1affffb5 	bne	870 <__call_exitprocs+0x3c>
- 998:	eaffffe8 	b	940 <__call_exitprocs+0x10c>
- 99c:	e1a0b006 	mov	r11, r6
- 9a0:	e1a06003 	mov	r6, r3
- 9a4:	eafffff9 	b	990 <__call_exitprocs+0x15c>
- 9a8:	00000b24 	.word	0x00000b24
- 9ac:	00000000 	.word	0x00000000
+000009c0 <__call_exitprocs>:
+ 9c0:	e92d4ff0 	push	{r4, r5, r6, r7, r8, r9, r10, r11, lr}
+ 9c4:	e59f3168 	ldr	r3, [pc, #360]	; b34 <__call_exitprocs+0x174>
+ 9c8:	e5933000 	ldr	r3, [r3]
+ 9cc:	e24dd014 	sub	sp, sp, #20
+ 9d0:	e58d3004 	str	r3, [sp, #4]
+ 9d4:	e2833f52 	add	r3, r3, #328	; 0x148
+ 9d8:	e58d0008 	str	r0, [sp, #8]
+ 9dc:	e58d300c 	str	r3, [sp, #12]
+ 9e0:	e1a07001 	mov	r7, r1
+ 9e4:	e3a08001 	mov	r8, #1
+ 9e8:	e59d3004 	ldr	r3, [sp, #4]
+ 9ec:	e5936148 	ldr	r6, [r3, #328]	; 0x148
+ 9f0:	e3560000 	cmp	r6, #0
+ 9f4:	e59db00c 	ldr	r11, [sp, #12]
+ 9f8:	0a000033 	beq	acc <__call_exitprocs+0x10c>
+ 9fc:	e5965004 	ldr	r5, [r6, #4]
+ a00:	e2554001 	subs	r4, r5, #1
+ a04:	5286a088 	addpl	r10, r6, #136	; 0x88
+ a08:	5285501f 	addpl	r5, r5, #31
+ a0c:	508a5105 	addpl	r5, r10, r5, lsl #2
+ a10:	5a000007 	bpl	a34 <__call_exitprocs+0x74>
+ a14:	ea000029 	b	ac0 <__call_exitprocs+0x100>
+ a18:	e5953000 	ldr	r3, [r5]
+ a1c:	e1530007 	cmp	r3, r7
+ a20:	0a000005 	beq	a3c <__call_exitprocs+0x7c>
+ a24:	e2444001 	sub	r4, r4, #1
+ a28:	e3740001 	cmn	r4, #1
+ a2c:	e2455004 	sub	r5, r5, #4
+ a30:	0a000022 	beq	ac0 <__call_exitprocs+0x100>
+ a34:	e3570000 	cmp	r7, #0
+ a38:	1afffff6 	bne	a18 <__call_exitprocs+0x58>
+ a3c:	e5963004 	ldr	r3, [r6, #4]
+ a40:	e06a2005 	rsb	r2, r10, r5
+ a44:	e2433001 	sub	r3, r3, #1
+ a48:	e0862002 	add	r2, r6, r2
+ a4c:	e1530004 	cmp	r3, r4
+ a50:	e5123078 	ldr	r3, [r2, #-120]	; 0xffffff88
+ a54:	13a01000 	movne	r1, #0
+ a58:	05864004 	streq	r4, [r6, #4]
+ a5c:	15021078 	strne	r1, [r2, #-120]	; 0xffffff88
+ a60:	e3530000 	cmp	r3, #0
+ a64:	0affffee 	beq	a24 <__call_exitprocs+0x64>
+ a68:	e1a02418 	lsl	r2, r8, r4
+ a6c:	e5961188 	ldr	r1, [r6, #392]	; 0x188
+ a70:	e1120001 	tst	r2, r1
+ a74:	e5969004 	ldr	r9, [r6, #4]
+ a78:	0a000016 	beq	ad8 <__call_exitprocs+0x118>
+ a7c:	e596118c 	ldr	r1, [r6, #396]	; 0x18c
+ a80:	e1120001 	tst	r2, r1
+ a84:	1a000016 	bne	ae4 <__call_exitprocs+0x124>
+ a88:	e59d0008 	ldr	r0, [sp, #8]
+ a8c:	e5151080 	ldr	r1, [r5, #-128]	; 0xffffff80
+ a90:	e1a0e00f 	mov	lr, pc
+ a94:	e12fff13 	bx	r3
+ a98:	e5963004 	ldr	r3, [r6, #4]
+ a9c:	e1530009 	cmp	r3, r9
+ aa0:	1affffd0 	bne	9e8 <__call_exitprocs+0x28>
+ aa4:	e59b3000 	ldr	r3, [r11]
+ aa8:	e1530006 	cmp	r3, r6
+ aac:	1affffcd 	bne	9e8 <__call_exitprocs+0x28>
+ ab0:	e2444001 	sub	r4, r4, #1
+ ab4:	e3740001 	cmn	r4, #1
+ ab8:	e2455004 	sub	r5, r5, #4
+ abc:	1affffdc 	bne	a34 <__call_exitprocs+0x74>
+ ac0:	e59f1070 	ldr	r1, [pc, #112]	; b38 <__call_exitprocs+0x178>
+ ac4:	e3510000 	cmp	r1, #0
+ ac8:	1a000009 	bne	af4 <__call_exitprocs+0x134>
+ acc:	e28dd014 	add	sp, sp, #20
+ ad0:	e8bd4ff0 	pop	{r4, r5, r6, r7, r8, r9, r10, r11, lr}
+ ad4:	e12fff1e 	bx	lr
+ ad8:	e1a0e00f 	mov	lr, pc
+ adc:	e12fff13 	bx	r3
+ ae0:	eaffffec 	b	a98 <__call_exitprocs+0xd8>
+ ae4:	e5150080 	ldr	r0, [r5, #-128]	; 0xffffff80
+ ae8:	e1a0e00f 	mov	lr, pc
+ aec:	e12fff13 	bx	r3
+ af0:	eaffffe8 	b	a98 <__call_exitprocs+0xd8>
+ af4:	e5963004 	ldr	r3, [r6, #4]
+ af8:	e3530000 	cmp	r3, #0
+ afc:	e5963000 	ldr	r3, [r6]
+ b00:	1a000008 	bne	b28 <__call_exitprocs+0x168>
+ b04:	e3530000 	cmp	r3, #0
+ b08:	0a000006 	beq	b28 <__call_exitprocs+0x168>
+ b0c:	e1a00006 	mov	r0, r6
+ b10:	e58b3000 	str	r3, [r11]
+ b14:	e320f000 	nop	{0}
+ b18:	e59b6000 	ldr	r6, [r11]
+ b1c:	e3560000 	cmp	r6, #0
+ b20:	1affffb5 	bne	9fc <__call_exitprocs+0x3c>
+ b24:	eaffffe8 	b	acc <__call_exitprocs+0x10c>
+ b28:	e1a0b006 	mov	r11, r6
+ b2c:	e1a06003 	mov	r6, r3
+ b30:	eafffff9 	b	b1c <__call_exitprocs+0x15c>
+ b34:	00000cb0 	.word	0x00000cb0
+ b38:	00000000 	.word	0x00000000
 
-000009b0 <register_fini>:
- 9b0:	e92d4008 	push	{r3, lr}
- 9b4:	e59f3010 	ldr	r3, [pc, #16]	; 9cc <register_fini+0x1c>
- 9b8:	e3530000 	cmp	r3, #0
- 9bc:	159f000c 	ldrne	r0, [pc, #12]	; 9d0 <register_fini+0x20>
- 9c0:	1bffff49 	blne	6ec <atexit>
- 9c4:	e8bd4008 	pop	{r3, lr}
- 9c8:	e12fff1e 	bx	lr
- 9cc:	00000b4c 	.word	0x00000b4c
- 9d0:	000009d4 	.word	0x000009d4
+00000b3c <register_fini>:
+ b3c:	e92d4008 	push	{r3, lr}
+ b40:	e59f3010 	ldr	r3, [pc, #16]	; b58 <register_fini+0x1c>
+ b44:	e3530000 	cmp	r3, #0
+ b48:	159f000c 	ldrne	r0, [pc, #12]	; b5c <register_fini+0x20>
+ b4c:	1bffff49 	blne	878 <atexit>
+ b50:	e8bd4008 	pop	{r3, lr}
+ b54:	e12fff1e 	bx	lr
+ b58:	00000cd8 	.word	0x00000cd8
+ b5c:	00000b60 	.word	0x00000b60
 
-000009d4 <__libc_fini_array>:
- 9d4:	e92d4038 	push	{r3, r4, r5, lr}
- 9d8:	e59f5030 	ldr	r5, [pc, #48]	; a10 <__libc_fini_array+0x3c>
- 9dc:	e59f4030 	ldr	r4, [pc, #48]	; a14 <__libc_fini_array+0x40>
- 9e0:	e0654004 	rsb	r4, r5, r4
- 9e4:	e1b04144 	asrs	r4, r4, #2
- 9e8:	10855104 	addne	r5, r5, r4, lsl #2
- 9ec:	0a000004 	beq	a04 <__libc_fini_array+0x30>
- 9f0:	e5353004 	ldr	r3, [r5, #-4]!
- 9f4:	e1a0e00f 	mov	lr, pc
- 9f8:	e12fff13 	bx	r3
- 9fc:	e2544001 	subs	r4, r4, #1
- a00:	1afffffa 	bne	9f0 <__libc_fini_array+0x1c>
- a04:	eb000050 	bl	b4c <__libc_fini>
- a08:	e8bd4038 	pop	{r3, r4, r5, lr}
- a0c:	e12fff1e 	bx	lr
- a10:	00000b64 	.word	0x00000b64
- a14:	00000b68 	.word	0x00000b68
+00000b60 <__libc_fini_array>:
+ b60:	e92d4038 	push	{r3, r4, r5, lr}
+ b64:	e59f5030 	ldr	r5, [pc, #48]	; b9c <__libc_fini_array+0x3c>
+ b68:	e59f4030 	ldr	r4, [pc, #48]	; ba0 <__libc_fini_array+0x40>
+ b6c:	e0654004 	rsb	r4, r5, r4
+ b70:	e1b04144 	asrs	r4, r4, #2
+ b74:	10855104 	addne	r5, r5, r4, lsl #2
+ b78:	0a000004 	beq	b90 <__libc_fini_array+0x30>
+ b7c:	e5353004 	ldr	r3, [r5, #-4]!
+ b80:	e1a0e00f 	mov	lr, pc
+ b84:	e12fff13 	bx	r3
+ b88:	e2544001 	subs	r4, r4, #1
+ b8c:	1afffffa 	bne	b7c <__libc_fini_array+0x1c>
+ b90:	eb000050 	bl	cd8 <__libc_fini>
+ b94:	e8bd4038 	pop	{r3, r4, r5, lr}
+ b98:	e12fff1e 	bx	lr
+ b9c:	00000cf0 	.word	0x00000cf0
+ ba0:	00000cf4 	.word	0x00000cf4
 
-00000a18 <__cs3_premain>:
- a18:	e92d4008 	push	{r3, lr}
- a1c:	eb00001d 	bl	a98 <__libc_init_array>
- a20:	e59f3030 	ldr	r3, [pc, #48]	; a58 <__cs3_premain+0x40>
- a24:	e3530000 	cmp	r3, #0
- a28:	15930000 	ldrne	r0, [r3]
- a2c:	01a00003 	moveq	r0, r3
- a30:	e59f3024 	ldr	r3, [pc, #36]	; a5c <__cs3_premain+0x44>
- a34:	e3530000 	cmp	r3, #0
- a38:	15931000 	ldrne	r1, [r3]
- a3c:	01a01003 	moveq	r1, r3
- a40:	e3a02000 	mov	r2, #0
- a44:	ebfffef5 	bl	620 <main>
- a48:	e59f3010 	ldr	r3, [pc, #16]	; a60 <__cs3_premain+0x48>
- a4c:	e3530000 	cmp	r3, #0
- a50:	1bffff2d 	blne	70c <exit>
- a54:	eafffffe 	b	a54 <__cs3_premain+0x3c>
+00000ba4 <__cs3_premain>:
+ ba4:	e92d4008 	push	{r3, lr}
+ ba8:	eb00001d 	bl	c24 <__libc_init_array>
+ bac:	e59f3030 	ldr	r3, [pc, #48]	; be4 <__cs3_premain+0x40>
+ bb0:	e3530000 	cmp	r3, #0
+ bb4:	15930000 	ldrne	r0, [r3]
+ bb8:	01a00003 	moveq	r0, r3
+ bbc:	e59f3024 	ldr	r3, [pc, #36]	; be8 <__cs3_premain+0x44>
+ bc0:	e3530000 	cmp	r3, #0
+ bc4:	15931000 	ldrne	r1, [r3]
+ bc8:	01a01003 	moveq	r1, r3
+ bcc:	e3a02000 	mov	r2, #0
+ bd0:	ebfffef2 	bl	7a0 <main>
+ bd4:	e59f3010 	ldr	r3, [pc, #16]	; bec <__cs3_premain+0x48>
+ bd8:	e3530000 	cmp	r3, #0
+ bdc:	1bffff2d 	blne	898 <exit>
+ be0:	eafffffe 	b	be0 <__cs3_premain+0x3c>
 	...
- a60:	0000070c 	.word	0x0000070c
+ bec:	00000898 	.word	0x00000898
 
-00000a64 <_exit>:
- a64:	e52de004 	push	{lr}		; (str lr, [sp, #-4]!)
- a68:	e3a00018 	mov	r0, #24
- a6c:	e59f1004 	ldr	r1, [pc, #4]	; a78 <_exit+0x14>
- a70:	ef123456 	svc	0x00123456
- a74:	eafffffe 	b	a74 <_exit+0x10>
- a78:	00020026 	.word	0x00020026
+00000bf0 <_exit>:
+ bf0:	e52de004 	push	{lr}		; (str lr, [sp, #-4]!)
+ bf4:	e3a00018 	mov	r0, #24
+ bf8:	e59f1004 	ldr	r1, [pc, #4]	; c04 <_exit+0x14>
+ bfc:	ef123456 	svc	0x00123456
+ c00:	eafffffe 	b	c00 <_exit+0x10>
+ c04:	00020026 	.word	0x00020026
 
-00000a7c <__cs3_isr_interrupt>:
- a7c:	eafffffe 	b	a7c <__cs3_isr_interrupt>
+00000c08 <__cs3_isr_interrupt>:
+ c08:	eafffffe 	b	c08 <__cs3_isr_interrupt>
 
-00000a80 <__cs3_isr_undef>:
- a80:	eafffffe 	b	a80 <__cs3_isr_undef>
+00000c0c <__cs3_isr_undef>:
+ c0c:	eafffffe 	b	c0c <__cs3_isr_undef>
 
-00000a84 <__cs3_isr_swi>:
- a84:	eafffffe 	b	a84 <__cs3_isr_swi>
+00000c10 <__cs3_isr_swi>:
+ c10:	eafffffe 	b	c10 <__cs3_isr_swi>
 
-00000a88 <__cs3_isr_pabort>:
- a88:	eafffffe 	b	a88 <__cs3_isr_pabort>
+00000c14 <__cs3_isr_pabort>:
+ c14:	eafffffe 	b	c14 <__cs3_isr_pabort>
 
-00000a8c <__cs3_isr_dabort>:
- a8c:	eafffffe 	b	a8c <__cs3_isr_dabort>
+00000c18 <__cs3_isr_dabort>:
+ c18:	eafffffe 	b	c18 <__cs3_isr_dabort>
 
-00000a90 <__cs3_isr_irq>:
- a90:	eafffffe 	b	a90 <__cs3_isr_irq>
+00000c1c <__cs3_isr_irq>:
+ c1c:	eafffffe 	b	c1c <__cs3_isr_irq>
 
-00000a94 <__cs3_isr_fiq>:
- a94:	eafffffe 	b	a94 <__cs3_isr_fiq>
+00000c20 <__cs3_isr_fiq>:
+ c20:	eafffffe 	b	c20 <__cs3_isr_fiq>
 
-00000a98 <__libc_init_array>:
- a98:	e92d4070 	push	{r4, r5, r6, lr}
- a9c:	e59f506c 	ldr	r5, [pc, #108]	; b10 <__libc_init_array+0x78>
- aa0:	e59f606c 	ldr	r6, [pc, #108]	; b14 <__libc_init_array+0x7c>
- aa4:	e0656006 	rsb	r6, r5, r6
- aa8:	e1b06146 	asrs	r6, r6, #2
- aac:	12455004 	subne	r5, r5, #4
- ab0:	13a04000 	movne	r4, #0
- ab4:	0a000005 	beq	ad0 <__libc_init_array+0x38>
- ab8:	e5b53004 	ldr	r3, [r5, #4]!
- abc:	e2844001 	add	r4, r4, #1
- ac0:	e1a0e00f 	mov	lr, pc
- ac4:	e12fff13 	bx	r3
- ac8:	e1560004 	cmp	r6, r4
- acc:	1afffff9 	bne	ab8 <__libc_init_array+0x20>
- ad0:	e59f5040 	ldr	r5, [pc, #64]	; b18 <__libc_init_array+0x80>
- ad4:	e59f6040 	ldr	r6, [pc, #64]	; b1c <__libc_init_array+0x84>
- ad8:	e0656006 	rsb	r6, r5, r6
- adc:	eb000012 	bl	b2c <_init>
- ae0:	e1b06146 	asrs	r6, r6, #2
- ae4:	12455004 	subne	r5, r5, #4
- ae8:	13a04000 	movne	r4, #0
- aec:	0a000005 	beq	b08 <__libc_init_array+0x70>
- af0:	e5b53004 	ldr	r3, [r5, #4]!
- af4:	e2844001 	add	r4, r4, #1
- af8:	e1a0e00f 	mov	lr, pc
- afc:	e12fff13 	bx	r3
- b00:	e1560004 	cmp	r6, r4
- b04:	1afffff9 	bne	af0 <__libc_init_array+0x58>
- b08:	e8bd4070 	pop	{r4, r5, r6, lr}
- b0c:	e12fff1e 	bx	lr
- b10:	00000b44 	.word	0x00000b44
- b14:	00000b44 	.word	0x00000b44
- b18:	00000b44 	.word	0x00000b44
- b1c:	00000b4c 	.word	0x00000b4c
+00000c24 <__libc_init_array>:
+ c24:	e92d4070 	push	{r4, r5, r6, lr}
+ c28:	e59f506c 	ldr	r5, [pc, #108]	; c9c <__libc_init_array+0x78>
+ c2c:	e59f606c 	ldr	r6, [pc, #108]	; ca0 <__libc_init_array+0x7c>
+ c30:	e0656006 	rsb	r6, r5, r6
+ c34:	e1b06146 	asrs	r6, r6, #2
+ c38:	12455004 	subne	r5, r5, #4
+ c3c:	13a04000 	movne	r4, #0
+ c40:	0a000005 	beq	c5c <__libc_init_array+0x38>
+ c44:	e5b53004 	ldr	r3, [r5, #4]!
+ c48:	e2844001 	add	r4, r4, #1
+ c4c:	e1a0e00f 	mov	lr, pc
+ c50:	e12fff13 	bx	r3
+ c54:	e1560004 	cmp	r6, r4
+ c58:	1afffff9 	bne	c44 <__libc_init_array+0x20>
+ c5c:	e59f5040 	ldr	r5, [pc, #64]	; ca4 <__libc_init_array+0x80>
+ c60:	e59f6040 	ldr	r6, [pc, #64]	; ca8 <__libc_init_array+0x84>
+ c64:	e0656006 	rsb	r6, r5, r6
+ c68:	eb000012 	bl	cb8 <_init>
+ c6c:	e1b06146 	asrs	r6, r6, #2
+ c70:	12455004 	subne	r5, r5, #4
+ c74:	13a04000 	movne	r4, #0
+ c78:	0a000005 	beq	c94 <__libc_init_array+0x70>
+ c7c:	e5b53004 	ldr	r3, [r5, #4]!
+ c80:	e2844001 	add	r4, r4, #1
+ c84:	e1a0e00f 	mov	lr, pc
+ c88:	e12fff13 	bx	r3
+ c8c:	e1560004 	cmp	r6, r4
+ c90:	1afffff9 	bne	c7c <__libc_init_array+0x58>
+ c94:	e8bd4070 	pop	{r4, r5, r6, lr}
+ c98:	e12fff1e 	bx	lr
+ c9c:	00000cd0 	.word	0x00000cd0
+ ca0:	00000cd0 	.word	0x00000cd0
+ ca4:	00000cd0 	.word	0x00000cd0
+ ca8:	00000cd8 	.word	0x00000cd8
 
 Disassembly of section .rodata:
 
-00000b24 <_global_impure_ptr>:
- b24:	00000ba8 00000043                       ....C...
+00000cb0 <_global_impure_ptr>:
+ cb0:	00000d30 00000043                       0...C...
 
-00000b2c <_init>:
- b2c:	e1a0c00d 	mov	r12, sp
- b30:	e92ddff8 	push	{r3, r4, r5, r6, r7, r8, r9, r10, r11, r12, lr, pc}
- b34:	e24cb004 	sub	r11, r12, #4
- b38:	e24bd028 	sub	sp, r11, #40	; 0x28
- b3c:	e89d6ff0 	ldm	sp, {r4, r5, r6, r7, r8, r9, r10, r11, sp, lr}
- b40:	e12fff1e 	bx	lr
+00000cb8 <_init>:
+ cb8:	e1a0c00d 	mov	r12, sp
+ cbc:	e92ddff8 	push	{r3, r4, r5, r6, r7, r8, r9, r10, r11, r12, lr, pc}
+ cc0:	e24cb004 	sub	r11, r12, #4
+ cc4:	e24bd028 	sub	sp, r11, #40	; 0x28
+ cc8:	e89d6ff0 	ldm	sp, {r4, r5, r6, r7, r8, r9, r10, r11, sp, lr}
+ ccc:	e12fff1e 	bx	lr
 
-00000b44 <__init_array_start>:
- b44:	000009b0 	.word	0x000009b0
+00000cd0 <__init_array_start>:
+ cd0:	00000b3c 	.word	0x00000b3c
 
-00000b48 <__frame_dummy_init_array_entry>:
- b48:	00000208                                ....
+00000cd4 <__frame_dummy_init_array_entry>:
+ cd4:	00000208                                ....
 
-00000b4c <__libc_fini>:
- b4c:	e1a0c00d 	mov	r12, sp
- b50:	e92ddff8 	push	{r3, r4, r5, r6, r7, r8, r9, r10, r11, r12, lr, pc}
- b54:	e24cb004 	sub	r11, r12, #4
- b58:	e24bd028 	sub	sp, r11, #40	; 0x28
- b5c:	e89d6ff0 	ldm	sp, {r4, r5, r6, r7, r8, r9, r10, r11, sp, lr}
- b60:	e12fff1e 	bx	lr
+00000cd8 <__libc_fini>:
+ cd8:	e1a0c00d 	mov	r12, sp
+ cdc:	e92ddff8 	push	{r3, r4, r5, r6, r7, r8, r9, r10, r11, r12, lr, pc}
+ ce0:	e24cb004 	sub	r11, r12, #4
+ ce4:	e24bd028 	sub	sp, r11, #40	; 0x28
+ ce8:	e89d6ff0 	ldm	sp, {r4, r5, r6, r7, r8, r9, r10, r11, sp, lr}
+ cec:	e12fff1e 	bx	lr
 
-00000b64 <__fini_array_start>:
- b64:	000001c4 	.word	0x000001c4
+00000cf0 <__fini_array_start>:
+ cf0:	000001c4 	.word	0x000001c4
 
-00000b68 <__cs3_regions>:
+00000cf4 <__cs3_regions>:
 	...
- b74:	00000fd8 	.word	0x00000fd8
- b78:	00000030 	.word	0x00000030
-
-00000b7c <__cs3_regions_end>:
- b7c:	00000000 	.word	0x00000000
+ d00:	00001160 	.word	0x00001160
+ d04:	00025830 	.word	0x00025830

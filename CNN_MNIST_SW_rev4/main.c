@@ -35,13 +35,13 @@ Revision History
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#include <xtime_l.h>
+//#include <xtime_l.h>
 #include "parameter.h"
 #include "ifmap_fmap_integer.h"
 #include "cnn_func_integer.h"
 #include "ifmap_fmap_float.h"
 #include "cnn_func_float.h"
-#include "benchmarking.h"
+//#include "benchmarking.h"
 #include "benchmarking.h"
 
 #define TEST_CASE 2
@@ -187,15 +187,14 @@ int main()
 	float error  = 0;
 	float signal = 0;
 	float NSRdB = 0;
-
+/*
 	BENCHMARK_CASE *pBenchmarkCase;
 	BENCHMARK_STATISTICS    *pStat;
 
 	printf("---- Time info. ---- \r\n");
 	printf("CPU_FREQ_HZ=%d, TIMER_FREQ_HZ=%d\r\n", CPU_FREQ_HZ, CPU_FREQ_HZ/2/(TIMER_PRE_SCALE+1));
-
+*/
 	for (mode_sel = 0; mode_sel< _mode; mode_sel++) { // mode_sel = 0 (SW), mode_sel = 1 (HW)
-
 		printf("\r\n");
 		if(mode_sel == 0)
 			printf("Case 0: Reference \r\n");
@@ -291,7 +290,7 @@ int main()
 		}
 
 	} //mode_sel
-
+/*
 	//Do not edit here.
 	BENCHMARK_CASE BenchmarkCases[TEST_CASE] = {
 		{"Reference", TEST_ROUNDS, initializor_dummy, cnn_ref,{  *ofmap_f,  *ifmap_f},0, validator_dummy},
@@ -307,6 +306,6 @@ int main()
 		statistics_print(pStat);
 	}
 	printf("----Benchmarking Complete----\r\n");
-
+*/
 	return 0;
 }
