@@ -187,13 +187,13 @@ int main()
 	float error  = 0;
 	float signal = 0;
 	float NSRdB = 0;
-/*
+
 	BENCHMARK_CASE *pBenchmarkCase;
 	BENCHMARK_STATISTICS    *pStat;
 
 	printf("---- Time info. ---- \r\n");
 	printf("CPU_FREQ_HZ=%d, TIMER_FREQ_HZ=%d\r\n", CPU_FREQ_HZ, CPU_FREQ_HZ/2/(TIMER_PRE_SCALE+1));
-*/
+
 	for (mode_sel = 0; mode_sel< _mode; mode_sel++) { // mode_sel = 0 (SW), mode_sel = 1 (HW)
 		printf("\r\n");
 		if(mode_sel == 0)
@@ -202,7 +202,6 @@ int main()
 			printf("Case 1: Optimization \r\n");
 
 		for (data_set = 0; data_set<_data; data_set++){
-
 			if(mode_sel == 0){
 				ifmap_f = (float *)calloc(H_C1*W_C1*C_C1*N_C1,sizeof(float));
 				ofmap_f = (float *)calloc(E_C4*F_C4*M_C4*N_C4,sizeof(float));
@@ -268,7 +267,6 @@ int main()
 				free(ifmap);
 				free(ofmap);
 			}
-
 		} //data_set
 
 
@@ -290,7 +288,7 @@ int main()
 		}
 
 	} //mode_sel
-/*
+
 	//Do not edit here.
 	BENCHMARK_CASE BenchmarkCases[TEST_CASE] = {
 		{"Reference", TEST_ROUNDS, initializor_dummy, cnn_ref,{  *ofmap_f,  *ifmap_f},0, validator_dummy},
@@ -306,6 +304,6 @@ int main()
 		statistics_print(pStat);
 	}
 	printf("----Benchmarking Complete----\r\n");
-*/
+
 	return 0;
 }
