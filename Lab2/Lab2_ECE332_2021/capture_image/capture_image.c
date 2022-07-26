@@ -36,7 +36,6 @@ float ofmap_ref[_data][_class] = { { 0, }, };
 float ofmap_img[_class] 	   = { 0, };
 short ofmap_opt[_data][_class] = { { 0, }, };
 
-
 int data_set = 0, mode_sel = 0;
 float max_val_f = 0;
 short max_val_s = 0;
@@ -53,6 +52,13 @@ float error  = 0;
 float signal = 0;
 float NSRdB = 0;
 
+//Display VAR
+int offset_x = 160 - 14;
+int offset_y = 120 - 14;
+int Size_x = 28;
+int Size_y = 28;
+int thickness = 1;
+
 //func
 unsigned int initializor_dummy(unsigned int uiParam0, unsigned int uiParam1, unsigned int uiParam2, unsigned int uiParam3);
 unsigned int validator_dummy(unsigned int uiParam0, unsigned int uiParam1, unsigned int uiParam2, unsigned int uiParam3 );
@@ -65,7 +71,11 @@ void cnn_img(float *ofmap, float *ifmap);
 int main(void) {
 	while (1){
 		enableVideo();
-		DrawRectangle_filled(50, 50, 28, 28, GREEN);
+		DrawRectangle_filled(offset_x				, offset_y			, Size_x, thickness	, BLUE); //밑변
+		DrawRectangle_filled(offset_x				, offset_y + Size_y	, Size_x, thickness, BLUE); //윗변
+		DrawRectangle_filled(offset_x				, offset_y			, thickness, Size_y, BLUE); //좌변
+		DrawRectangle_filled(offset_x + Size_x		, offset_y			, thickness, Size_y, BLUE); //우변
+
 		if(*(KEY_ptr) != 0){
 			key_value = *(KEY_ptr);
 			switch (key_value) {
