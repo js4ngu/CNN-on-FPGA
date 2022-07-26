@@ -3,6 +3,8 @@
     "files.associations": {
         "benchmarking.h": "c",
         "parameter.h": "c",
-        "ifmap_fmap_integer.h": "c"
+        "ifmap_fmap_integer.h": "c",
+        "cnn_img.h": "c",
+        "video.h": "c"
     }
 }
