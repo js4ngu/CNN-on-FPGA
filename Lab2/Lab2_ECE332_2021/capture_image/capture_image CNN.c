@@ -59,99 +59,95 @@ void cnn_opt(short *ofmap, short *ifmap, int data_set);
 //void Measure_performance();
 
 int main(void) {
-	while (1){
-		enableVideo();
-		if(*(KEY_ptr) != 0){
-			key_value = *(KEY_ptr);
-			switch (key_value) {
-				case KEY0:		//KEY00
-					printf("Case 0: Reference \r\n");
-					
-					for (data_set = 0; data_set<_data; data_set++){
-						ifmap_f = (float *)calloc(H_C1*W_C1*C_C1*N_C1,sizeof(float));
-						ofmap_f = (float *)calloc(E_C4*F_C4*M_C4*N_C4,sizeof(float));
+	if(*(KEY_ptr) != 0){
+		key_value = *(KEY_ptr);
+		switch (key_value) {
+			case KEY0:		//KEY00
+				printf("Case 0: Reference \r\n");
+				/*
+				for (data_set = 0; data_set<_data; data_set++){
+					ifmap_f = (float *)calloc(H_C1*W_C1*C_C1*N_C1,sizeof(float));
+					ofmap_f = (float *)calloc(E_C4*F_C4*M_C4*N_C4,sizeof(float));
 
-						cnn_ref(ofmap_f, ifmap_f, data_set);
+					cnn_ref(ofmap_f, ifmap_f, data_set);
 
-						/////////////////////////////
-						//     Classifiacation     //
-						////////////////////////////
-						max_val_f = ofmap_f[0];
-						data_index = 0;
-						for (n = 0; n<N_C4; n++) {
-							for (m = 0; m<M_C4; m++) {
-								for (e = 0; e<E_C4; e++) {
-									for (f = 0; f<F_C4; f++) {
+					/////////////////////////////
+					//     Classifiacation     //
+					////////////////////////////
+					max_val_f = ofmap_f[0];
+					data_index = 0;
+					for (n = 0; n<N_C4; n++) {
+						for (m = 0; m<M_C4; m++) {
+							for (e = 0; e<E_C4; e++) {
+								for (f = 0; f<F_C4; f++) {
 
-										ofmap_ref[data_set][data_index] = ofmap_f[((n*M_C4 + m)*E_C4 + f)*F_C4 + e];
+									ofmap_ref[data_set][data_index] = ofmap_f[((n*M_C4 + m)*E_C4 + f)*F_C4 + e];
 
-										if (ofmap_f[((n*M_C4 + m)*E_C4 + f)*F_C4 + e] >= max_val_f) {
-											max_val_f = ofmap_f[((n*M_C4 + m)*E_C4 + f)*F_C4 + e];
-											estimated_label = m;
-										}
-										data_index++;
+									if (ofmap_f[((n*M_C4 + m)*E_C4 + f)*F_C4 + e] >= max_val_f) {
+										max_val_f = ofmap_f[((n*M_C4 + m)*E_C4 + f)*F_C4 + e];
+										estimated_label = m;
 									}
+									data_index++;
 								}
 							}
 						}
-						printf("estimated label: %d (%f) \r\n", estimated_label, max_val_f);
-
-						free(ifmap_f);
-						free(ofmap_f);
 					}
-					printf("DONE\r\n");
-					while (*KEY_ptr != 0);	//while the key is pressed down dont do anything
-					break;
+					printf("estimated label: %d (%f) \r\n", estimated_label, max_val_f);
 
-				case KEY1:		//KEY01
-					printf("Case 1: Optimization \r\n");
-					
-					for (data_set = 0; data_set<_data; data_set++){
-						ifmap   = (short *)calloc(H_C1*W_C1*C_C1*N_C1,sizeof(short));
-						ofmap   = (short *)calloc(E_C4*F_C4*M_C4*N_C4,sizeof(short));
+					free(ifmap_f);
+					free(ofmap_f);
+				}
+				*/
+				break;
 
-						cnn_opt(ofmap, ifmap, data_set);
+			case KEY1:		//KEY01
+				printf("Case 1: Optimization \r\n");
+				/*
+				for (data_set = 0; data_set<_data; data_set++){
+					ifmap   = (short *)calloc(H_C1*W_C1*C_C1*N_C1,sizeof(short));
+					ofmap   = (short *)calloc(E_C4*F_C4*M_C4*N_C4,sizeof(short));
 
-						/////////////////////////////
-						//     Classifiacation     //
-						////////////////////////////
-						max_val_s = ofmap[0];
-						data_index = 0;
-						for (n = 0; n<N_C4; n++) {
-							for (m = 0; m<M_C4; m++) {
-								for (e = 0; e<E_C4; e++) {
-									for (f = 0; f<F_C4; f++) {
+					cnn_opt(ofmap, ifmap, data_set);
 
-										ofmap_opt[data_set][data_index] = ofmap[((n*M_C4 + m)*E_C4 + f)*F_C4 + e];
+					/////////////////////////////
+					//     Classifiacation     //
+					////////////////////////////
+					max_val_s = ofmap[0];
+					data_index = 0;
+					for (n = 0; n<N_C4; n++) {
+						for (m = 0; m<M_C4; m++) {
+							for (e = 0; e<E_C4; e++) {
+								for (f = 0; f<F_C4; f++) {
 
-										if (ofmap[((n*M_C4 + m)*E_C4 + f)*F_C4 + e] >= max_val_s) {
-											max_val_s = ofmap[((n*M_C4 + m)*E_C4 + f)*F_C4 + e];
-											estimated_label = m;
-										}
-										data_index++;
+									ofmap_opt[data_set][data_index] = ofmap[((n*M_C4 + m)*E_C4 + f)*F_C4 + e];
+
+									if (ofmap[((n*M_C4 + m)*E_C4 + f)*F_C4 + e] >= max_val_s) {
+										max_val_s = ofmap[((n*M_C4 + m)*E_C4 + f)*F_C4 + e];
+										estimated_label = m;
 									}
+									data_index++;
 								}
 							}
 						}
-						printf("estimated label: %d (%d) \r\n", estimated_label, max_val_s);
+					}
+					printf("estimated label: %d (%d) \r\n", estimated_label, max_val_s);
 
-						free(ifmap);
-						free(ofmap);
-					} 
-					
-					while (*KEY_ptr != 0);	//while the key is pressed down dont do anything
-					break;
+					free(ifmap);
+					free(ofmap);
+				} 
+				*/
+				while (*KEY_ptr != 0);	//while the key is pressed down dont do anything
+				break;
 
-				case KEY2:		//KEY02
-					printf("KEY2 \r\n");
-					while (*KEY_ptr != 0);	//while the key is pressed down dont do anything
-					break;
+			case KEY2:		//KEY02
+				printf("KEY2 \r\n");
+				while (*KEY_ptr != 0);	//while the key is pressed down dont do anything
+				break;
 
-				case KEY3:		//KEY03
-					printf("KEY3 \r\n");
-					while (*KEY_ptr != 0);	//while the key is pressed down dont do anything
-					break;
-			}
+			case KEY3:		//KEY03
+				printf("KEY3 \r\n");
+				while (*KEY_ptr != 0);	//while the key is pressed down dont do anything
+				break;
 		}
 	}
 }
