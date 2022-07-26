@@ -13,6 +13,14 @@
         <type>C Program</type>
         <source_files>
             <source_file filepath="true">capture_image.c</source_file>
+            <source_file filepath="true">address_map_arm.h</source_file>
+            <source_file filepath="true">video.c</source_file>
+            <source_file filepath="true">video.h</source_file>
+            <source_file filepath="true">CNN/cnn_func_float.h</source_file>
+            <source_file filepath="true">CNN/cnn_func_integer.h</source_file>
+            <source_file filepath="true">CNN/ifmap_fmap_float.h</source_file>
+            <source_file filepath="true">CNN/ifmap_fmap_integer.h</source_file>
+            <source_file filepath="true">CNN/parameter.h</source_file>
         </source_files>
         <options>
             <compiler_flags>-g -O1</compiler_flags>

@@ -1,8 +1,5 @@
 #include "video.h"
-#include <stdio.h>
 
-
-#define KEY_BASE            0xFF200050
 #define VIDEO_IN_BASE       0xFF203060
 #define FPGA_ONCHIP_BASE    0xC8000000
 
@@ -12,26 +9,20 @@
 #define GREEN				0x0F00
 #define RED 				0xF000
 
-#define KEY0				0x1
-#define KEY1				0x2
-#define KEY2				0x4
-#define KEY3				0x8
-
-
-volatile int 	* KEY_ptr			= (int *) KEY_BASE;
 volatile int 	* Video_In_DMA_ptr	= (int *) VIDEO_IN_BASE;
 volatile short	* Video_Mem_ptr		= (short *) FPGA_ONCHIP_BASE;
-
 
 /*Global var*/
 int x, y;
 int bW=0; //0 if not b&w or has been already inverted backward 	1 if inverted forward
-int key_value;
 int off_x = 50;
 int off_y = 50;
 short fixeldata[320][240];
 short (*fixel_ptr)[240] = fixeldata;
 
+void enableVideo(){
+    *(Video_In_DMA_ptr + 3) = 0x4;
+}
 
 void captureVideo(){
 	*(Video_In_DMA_ptr + 3) = 0x0;
