@@ -51,7 +51,7 @@ int main(void) {
 					break;
 
 				case KEY1:		//KEY01
-					MNIST_OPT();
+					//MNIST_OPT();
 					while (*KEY_ptr != 0);	//while the key is pressed down dont do anything
 					break;
 

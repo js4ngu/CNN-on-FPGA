@@ -124,7 +124,7 @@ void captureImage(){
 		}
 	}	
 }
-
+		
 void invertForward(){ //bW==0
 	short pixelVal;
 	for (y = 0; y < 240; y++) {
