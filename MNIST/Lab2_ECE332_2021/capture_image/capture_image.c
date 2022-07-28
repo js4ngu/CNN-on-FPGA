@@ -48,6 +48,7 @@ int main(void) {
 			switch (key_value) {
 				case KEY0:		//KEY00
 					fixelData(offset_x, offset_y, Size_x, Size_y, fixeldata);
+					print_fixelData(fixeldata);
 					while (*KEY_ptr != 0);	//while the key is pressed down dont do anything
 					break;
 

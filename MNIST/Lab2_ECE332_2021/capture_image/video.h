@@ -6,6 +6,7 @@ void captureVideo();
 void blackAndWhite();
 void blackScreen();
 void fixelData(int offset_x, int offset_y, int Size_x, int Size_y, int fixeldata[][28]);
+void print_fixelData(int fixeldata[][28]);
 void blackScreen();
 void whiteScreen();
 void RedScreen();

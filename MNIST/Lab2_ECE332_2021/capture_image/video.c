@@ -59,6 +59,17 @@ void fixelData(int offset_x, int offset_y, int Size_x, int Size_y, int fixeldata
 	}	
 }
 
+void print_fixelData(int fixeldata[][28]){
+	int i, j;
+	for (i = 0; i < 28; i++) {
+		for (j = 0; j < 28; j++) {
+			printf("%d,", fixeldata[i][j]);
+		}
+		printf("\n");
+	}
+	
+}
+
 void blackScreen(){
 	*(Video_In_DMA_ptr + 3) = 0x0;
 	for (y = 0; y < 240; y++) {
