@@ -1,3 +1,4 @@
+#include <stdint.h>
 #include "video.h"
 
 #define VIDEO_IN_BASE       0xFF203060
@@ -14,11 +15,18 @@ volatile short	* Video_Mem_ptr		= (short *) FPGA_ONCHIP_BASE;
 
 /*Global var*/
 int x, y;
-int bW=0; //0 if not b&w or has been already inverted backward 	1 if inverted forward
 int off_x = 50;
 int off_y = 50;
-short fixeldata[320][240];
-short (*fixel_ptr)[240] = fixeldata;
+//short fixeldata[28][28];
+
+int x=0; //keep track of coordinates...x goes from 0 to 320
+int y=0; //keep track of coordinates...y goes from 0 to 219
+int sdram_index=0;
+int sum=0;  //keep sum of color of pixels
+int average=0;  //sum of color of pixels/# of pixels
+int comp = 0; // keep track of bytes compressed
+int decomp = 0;
+	
 
 void enableVideo(){
     *(Video_In_DMA_ptr + 3) = 0x4;
@@ -34,12 +42,19 @@ void captureVideo(){
 	}	
 }
 
-void fixelData(){
+void fixelData(int offset_x, int offset_y, int Size_x, int Size_y, int fixeldata[][28]){
 	*(Video_In_DMA_ptr + 3) = 0x0;
 	for (y = 0; y < 240; y++) {
 		for (x = 0; x < 320; x++) {
-			fixeldata[x][y] = *(Video_Mem_ptr + (y << 9) + x);
-			*(Video_Mem_ptr + (y << 9) + x) = fixeldata[x][y]; //capture the current image in the buffer and store it in the buffer
+			int temp2 = *(Video_Mem_ptr + (y << 9) + x);
+			if ((offset_x < x) && (x < offset_x + Size_x) && (offset_y < y) && (y < offset_y + Size_y)){
+				//capture the current image in the buffer and store it in the buffer
+				fixeldata[x - offset_x][y - offset_y] = temp2;
+				*(Video_Mem_ptr + (y << 9) + x) = fixeldata[x - offset_x][y - offset_y];
+			}
+			else{
+				*(Video_Mem_ptr + (y << 9) + x) = BLUE;
+			}
 		}
 	}	
 }

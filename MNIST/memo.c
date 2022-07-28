@@ -25,36 +25,36 @@
 */
 
 /* Pointers*/
-	volatile int * SDRAM_ptr = (int *) SDRAM_BASE;
-	volatile int * HPS_GPIO1_ptr = (int *) HPS_GPIO1_BASE;
-	volatile int * KEY_ptr				= (int *) KEY_BASE;
-	volatile int * Video_In_DMA_ptr	= (int *) VIDEO_IN_BASE;
-	volatile short * Video_Mem_ptr	= (short *) FPGA_ONCHIP_BASE;
-	volatile int* SW_switch_ptr = (int*) SWITCH_BASE; // SW slider switch address
+volatile int * SDRAM_ptr = (int *) SDRAM_BASE;
+volatile int * HPS_GPIO1_ptr = (int *) HPS_GPIO1_BASE;
+volatile int * KEY_ptr				= (int *) KEY_BASE;
+volatile int * Video_In_DMA_ptr	= (int *) VIDEO_IN_BASE;
+volatile short * Video_Mem_ptr	= (short *) FPGA_ONCHIP_BASE;
+volatile int* SW_switch_ptr = (int*) SWITCH_BASE; // SW slider switch address
 
 /* Prototyping Functions*/
-	void show();
-	void DecompressCompress();
-	void blackAndWhite();
-	void outOfSDRAM();
-	void invertForward();
-	void captureImage();
-	void blackScreen();
-	void pixelInBytes();
-	void decompress(int RLE_Return);
-	
-	/*Global Vars*/
-	int bW=0; //0 if not b&w or has been already inverted backward 	1 if inverted forward
-	int bwReset=0;   //make sure screen isnt b&w
-	int x=0; //keep track of coordinates...x goes from 0 to 320
-	int y=0; //keep track of coordinates...y goes from 0 to 219
-	int sdram_index=0;
-	int sum=0;  //keep sum of color of pixels
-	int average=0;  //sum of color of pixels/# of pixels
-	int comp = 0; // keep track of bytes compressed
-	int decomp = 0;
-	
-	unsigned char pixelBytes[(320*240)/8]; //store one bit per pixel in groups of 8 bits
+void show();
+void DecompressCompress();
+void blackAndWhite();
+void outOfSDRAM();
+void invertForward();
+void captureImage();
+void blackScreen();
+void pixelInBytes();
+void decompress(int RLE_Return);
+
+/*Global Vars*/
+int bW=0; //0 if not b&w or has been already inverted backward 	1 if inverted forward
+int bwReset=0;   //make sure screen isnt b&w
+int x=0; //keep track of coordinates...x goes from 0 to 320
+int y=0; //keep track of coordinates...y goes from 0 to 219
+int sdram_index=0;
+int sum=0;  //keep sum of color of pixels
+int average=0;  //sum of color of pixels/# of pixels
+int comp = 0; // keep track of bytes compressed
+int decomp = 0;
+
+unsigned char pixelBytes[(320*240)/8]; //store one bit per pixel in groups of 8 bits
 	
 int main(void)
 {
@@ -228,4 +228,25 @@ void DecompressCompress(){
 	alt_write_byte(FIFO_OUT_READ_REQ_PIO_BASE+ALT_FPGA_BRIDGE_LWH2F_OFST,0);
 	sdram_index=0; //reset index for SDRAM
 	outOfSDRAM();
+}
+
+
+short fixeldata[28][28];
+fixelData(offset_x, offset_y, Size_x, Size_y, **fixeldata);
+
+void fixelData(int offset_x, int offset_y, int Size_x, int Size_y, short **fixeldata){
+	*(Video_In_DMA_ptr + 3) = 0x0;
+	for (y = 0; y < 240; y++) {
+		for (x = 0; x < 320; x++) {
+			short temp2 = *(Video_Mem_ptr + (y << 9) + x);
+			if ((offset_x < x) && (x < offset_x + Size_x) && (offset_y < y) && (y < offset_y + Size_y)){
+				//capture the current image in the buffer and store it in the buffer
+				*((fixeldata + (x - offset_x)) + (y - offset_y)) = temp2;
+				*(Video_Mem_ptr + (y << 9) + x) = *((fixeldata + (x - offset_x)) + (y - offset_y));
+			}
+			else{
+				*(Video_Mem_ptr + (y << 9) + x) = BLUE;
+			}
+		}
+	}	
 }
