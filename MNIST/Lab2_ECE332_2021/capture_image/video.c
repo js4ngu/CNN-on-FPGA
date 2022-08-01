@@ -79,7 +79,7 @@ void print_fixelData(short fixeldata[][28]){
 			data = (uint16_t)fixeldata[i][j] & 0xF000;
 			R = data >> 12;
 			data = (uint16_t)fixeldata[i][j] & 0xF000;
-			R = data >> 12;
+			G = data >> 8;
 			data = (uint16_t)fixeldata[i][j] & 0x00FF;
 			B = data;
 			printf("[%u %u %u],", R, G, B);
@@ -102,6 +102,7 @@ void Grayscale(short fixeldata[][28]){
 			B = data;
 			grayScale = (R + G + B) / 3;
 			printf("%u," ,grayScale);
+			//*(Video_Mem_ptr + (y << 9) + x) = grayScale;
 		}
 		printf("\n");
 	}
