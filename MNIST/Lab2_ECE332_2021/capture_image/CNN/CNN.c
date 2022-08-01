@@ -1,3 +1,4 @@
+#include <stdint.h>
 #include "CNN.h"
 #include "parameter.h"
 #include "ifmap_fmap_integer.h"
@@ -64,7 +65,6 @@ void cnn_img_opt(short *ofmap, short *ifmap){
 	bias(ofmap, ofmap, bias4, 1, 10, 1, 1);
 }
 
-
 void MNIST_IMG_OPT(){
 	printf("Case 3: Test IMG Optimization \r\n");
 	ifmap[28*28];
@@ -87,4 +87,5 @@ void Classifiacation_opt(){
 		data_index++;
 	}
 	printf("estimated label: %d (%d) \r\n", estimated_label, max_val_s);
+	int ofmap[10] = {0,};
 }

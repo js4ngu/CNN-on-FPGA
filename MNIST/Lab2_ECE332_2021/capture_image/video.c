@@ -42,14 +42,24 @@ void captureVideo(){
 	}	
 }
 
-void fixelData(int offset_x, int offset_y, int Size_x, int Size_y, int fixeldata[][28]){
+void fixelData(int offset_x, int offset_y, int Size_x, int Size_y, short fixeldata[][28]){
+	uint16_t data;
+	uint8_t R, G, B;
 	*(Video_In_DMA_ptr + 3) = 0x0;
 	for (y = 0; y < 240; y++) {
 		for (x = 0; x < 320; x++) {
-			int temp2 = *(Video_Mem_ptr + (y << 9) + x);
+			short temp2 = *(Video_Mem_ptr + (y << 9) + x);
 			if ((offset_x < x) && (x < offset_x + Size_x) && (offset_y < y) && (y < offset_y + Size_y)){
 				//capture the current image in the buffer and store it in the buffer
+				
 				fixeldata[x - offset_x][y - offset_y] = temp2;
+				//data = (uint16_t)temp2 & 0xF000;
+				//R = data >> 12;
+				//data = (uint16_t)temp2 & 0x0F00;
+				//G = data >> 8;
+				//data = (uint16_t)temp2;
+				//B = data & 0x00FF;
+				//printf("[%x %x %x]\n", R, G, B);
 				*(Video_Mem_ptr + (y << 9) + x) = fixeldata[x - offset_x][y - offset_y];
 			}
 			else{
@@ -59,15 +69,42 @@ void fixelData(int offset_x, int offset_y, int Size_x, int Size_y, int fixeldata
 	}	
 }
 
-void print_fixelData(int fixeldata[][28]){
+void print_fixelData(short fixeldata[][28]){
 	int i, j;
+	uint16_t data;
+	uint8_t R, G, B;
+
 	for (i = 0; i < 28; i++) {
 		for (j = 0; j < 28; j++) {
-			printf("%d,", fixeldata[i][j]);
+			data = (uint16_t)fixeldata[i][j] & 0xF000;
+			R = data >> 12;
+			data = (uint16_t)fixeldata[i][j] & 0xF000;
+			R = data >> 12;
+			data = (uint16_t)fixeldata[i][j] & 0x00FF;
+			B = data;
+			printf("[%u %u %u],", R, G, B);
 		}
 		printf("\n");
 	}
-	
+}
+
+void Grayscale(short fixeldata[][28]){
+	int i, j;
+	uint16_t data;
+	uint8_t R, G, B, grayScale;
+	for (i = 0; i < 28; i++) {
+		for (j = 0; j < 28; j++) {
+			data = (uint16_t)fixeldata[i][j] & 0xF000;
+			R = data >> 12;
+			data = (uint16_t)fixeldata[i][j] & 0x0F00;
+			G = data >> 8;
+			data = (uint16_t)fixeldata[i][j] & 0x00FF;
+			B = data;
+			grayScale = (R + G + B) / 3;
+			printf("%u," ,grayScale);
+		}
+		printf("\n");
+	}
 }
 
 void blackScreen(){

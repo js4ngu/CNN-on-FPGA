@@ -34,7 +34,7 @@ int Size_y = 28;
 int thickness = 1;
 
 //DATA
-int fixeldata[28][28];
+short fixeldata[28][28];
 
 int main(void) {
 	while (1){
@@ -47,18 +47,19 @@ int main(void) {
 			key_value = *(KEY_ptr);
 			switch (key_value) {
 				case KEY0:		//KEY00
-					fixelData(offset_x, offset_y, Size_x, Size_y, fixeldata);
-					print_fixelData(fixeldata);
+					enableVideo(); //capture the image and store it to the On-Chip Memory inside the FPGA
 					while (*KEY_ptr != 0);	//while the key is pressed down dont do anything
 					break;
 
 				case KEY1:		//KEY01
-					captureVideo(); //capture the image and store it to the On-Chip Memory inside the FPGA
+					fixelData(offset_x, offset_y, Size_x, Size_y, fixeldata);
+					Grayscale(fixeldata);
 					while (*KEY_ptr != 0);	//while the key is pressed down dont do anything
 					break;
 
 				case KEY2:		//KEY02
-					enableVideo(); //capture the image and store it to the On-Chip Memory inside the FPGA
+					fixelData(offset_x, offset_y, Size_x, Size_y, fixeldata);
+					print_fixelData(fixeldata);
 					while (*KEY_ptr != 0);	//while the key is pressed down dont do anything
 					break;
 
